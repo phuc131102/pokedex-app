@@ -54,12 +54,13 @@ function Gen9() {
       top: "50%",
       left: "50%",
       transform: "translate(-50%, -50%)",
-      width: 500,
-      maxHeight: 530,
-      bgcolor: "background.paper",
-      boxShadow: 24,
-      borderRadius: 10,
-      p: 4,
+      width: "90%", // Adjust the width as needed for smaller screens
+      maxWidth: "500px", // Set a maximum width
+      maxHeight: "75vh", // Set a maximum height relative to the viewport height
+      backgroundColor: "white", // Use the appropriate background color
+      boxShadow: "0 0 24px rgba(0, 0, 0, 0.5)", // Adjust the box shadow as needed
+      borderRadius: "10px", // Use appropriate border radius
+      padding: "20px", // Adjust padding as needed
       overflow: "auto",
     },
     scrollbar: {
@@ -211,8 +212,8 @@ function Gen9() {
       <Modal
         open={showModal}
         onClose={handleCloseModal}
-        aria-labelledby="place-book-modal"
-        aria-describedby="place-book-modal-description"
+        aria-labelledby="parent-modal-title"
+        aria-describedby="parent-modal-description"
       >
         <Box sx={{ ...styles.modal, ...styles.scrollbar }}>
           <Typography id="place-book-modal" variant="h6" textAlign="center">
