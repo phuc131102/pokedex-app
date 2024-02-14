@@ -25,6 +25,8 @@ import Fire from "../../assets/type/Fire.png";
 import Fire_full from "../../assets/type/Fire_v2.png";
 import Water from "../../assets/type/Water.png";
 import Water_full from "../../assets/type/Water_v2.png";
+import Normal from "../../assets/type/Normal.png";
+import Normal_full from "../../assets/type/Normal_v2.png";
 
 function Gen9() {
   const [showModal, setShowModal] = useState(false);
@@ -209,6 +211,8 @@ function Gen9() {
                                 ? Fire
                                 : card.type1 === "Water"
                                 ? Water
+                                : card.type1 === "Normal"
+                                ? Normal
                                 : null
                             }
                             alt="Grass"
@@ -226,6 +230,8 @@ function Gen9() {
                                   ? Fire
                                   : card.type1 === "Water"
                                   ? Water
+                                  : card.type1 === "Normal"
+                                  ? Normal
                                   : null
                               }
                               alt="Grass"
@@ -295,6 +301,8 @@ function Gen9() {
                   ? Fire_full
                   : selectedCard.type1 === "Water"
                   ? Water_full
+                  : selectedCard.type1 === "Normal"
+                  ? Normal_full
                   : null
               }
               alt="Grass"
@@ -312,6 +320,8 @@ function Gen9() {
                     ? Fire_full
                     : selectedCard.type1 === "Water"
                     ? Water_full
+                    : selectedCard.type1 === "Normal"
+                    ? Normal_full
                     : null
                 }
                 alt="Grass"
@@ -336,14 +346,35 @@ function Gen9() {
                   >
                     Chủng loại
                   </TableCell>
-                  <TableCell
-                    style={{
-                      border: "1px solid black",
-                      textAlign: "center",
-                    }}
-                  >
-                    Đặc tính
-                  </TableCell>
+                  {selectedCard.ability2 === "" ? (
+                    <TableCell
+                      style={{
+                        border: "1px solid black",
+                        textAlign: "center",
+                      }}
+                    >
+                      Đặc tính
+                    </TableCell>
+                  ) : (
+                    <>
+                      <TableCell
+                        style={{
+                          border: "1px solid black",
+                          textAlign: "center",
+                        }}
+                      >
+                        Đặc tính 1
+                      </TableCell>
+                      <TableCell
+                        style={{
+                          border: "1px solid black",
+                          textAlign: "center",
+                        }}
+                      >
+                        Đặc tính 2
+                      </TableCell>
+                    </>
+                  )}
                   <TableCell
                     style={{
                       border: "1px solid black",
@@ -364,23 +395,68 @@ function Gen9() {
                   >
                     {selectedCard.category}
                   </TableCell>
-                  <TableCell
-                    onClick={() => handleOpenNestedModal(selectedCard.ability)}
-                    style={{
-                      border: "1px solid black",
-                      textAlign: "center",
-                      cursor: "pointer",
-                      transition: "all 0.3s",
-                    }}
-                    onMouseEnter={(e) =>
-                      (e.target.style.backgroundColor = "lightgray")
-                    }
-                    onMouseLeave={(e) =>
-                      (e.target.style.backgroundColor = "white")
-                    }
-                  >
-                    {selectedCard.ability}
-                  </TableCell>
+                  {selectedCard.ability2 === "" ? (
+                    <TableCell
+                      onClick={() =>
+                        handleOpenNestedModal(selectedCard.ability)
+                      }
+                      style={{
+                        border: "1px solid black",
+                        textAlign: "center",
+                        cursor: "pointer",
+                        transition: "all 0.3s",
+                      }}
+                      onMouseEnter={(e) =>
+                        (e.target.style.backgroundColor = "lightgray")
+                      }
+                      onMouseLeave={(e) =>
+                        (e.target.style.backgroundColor = "white")
+                      }
+                    >
+                      {selectedCard.ability}
+                    </TableCell>
+                  ) : (
+                    <>
+                      <TableCell
+                        onClick={() =>
+                          handleOpenNestedModal(selectedCard.ability)
+                        }
+                        style={{
+                          border: "1px solid black",
+                          textAlign: "center",
+                          cursor: "pointer",
+                          transition: "all 0.3s",
+                        }}
+                        onMouseEnter={(e) =>
+                          (e.target.style.backgroundColor = "lightgray")
+                        }
+                        onMouseLeave={(e) =>
+                          (e.target.style.backgroundColor = "white")
+                        }
+                      >
+                        {selectedCard.ability}
+                      </TableCell>
+                      <TableCell
+                        onClick={() =>
+                          handleOpenNestedModal(selectedCard.ability2)
+                        }
+                        style={{
+                          border: "1px solid black",
+                          textAlign: "center",
+                          cursor: "pointer",
+                          transition: "all 0.3s",
+                        }}
+                        onMouseEnter={(e) =>
+                          (e.target.style.backgroundColor = "lightgray")
+                        }
+                        onMouseLeave={(e) =>
+                          (e.target.style.backgroundColor = "white")
+                        }
+                      >
+                        {selectedCard.ability2}
+                      </TableCell>
+                    </>
+                  )}
                   <TableCell
                     onClick={() =>
                       handleOpenNestedModal(selectedCard.hid_ability)

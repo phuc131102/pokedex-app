@@ -66,6 +66,7 @@ function Signup() {
   const [type2, setType2] = React.useState("");
   const [abi1, setAbi1] = React.useState("");
   const [abi2, setAbi2] = React.useState("");
+  const [abi3, setAbi3] = React.useState("");
 
   const handleChangeType1 = (event) => {
     setType1(event.target.value);
@@ -76,6 +77,9 @@ function Signup() {
   const handleChangeAbi1 = (event) => {
     setAbi1(event.target.value);
   };
+  const handleChangeAbi3 = (event) => {
+    setAbi3(event.target.value);
+  };
   const handleChangeAbi2 = (event) => {
     setAbi2(event.target.value);
   };
@@ -85,6 +89,7 @@ function Signup() {
     type1: "",
     type2: "",
     ability: "",
+    ability2: "",
     hid_ability: "",
     category: "",
     name: "",
@@ -109,7 +114,8 @@ function Signup() {
     formData.type2 = type2;
     formData.ability = abi1;
     formData.hid_ability = abi2;
-    formData.category = formData.category + " Pokémon";
+    formData.ability2 = abi3;
+    formData.category = "Pokémon " + formData.category;
     formData.image = avatarBase64;
     formData.icon = avatarBase64new;
 
@@ -272,7 +278,7 @@ function Signup() {
                             marginBottom: "15px",
                           }}
                         >
-                          <InputLabel>Ability</InputLabel>
+                          <InputLabel>Ability 1</InputLabel>
                           <Select onChange={handleChangeAbi1}>
                             {ability
                               .sort((a, b) =>
@@ -294,8 +300,8 @@ function Signup() {
                             marginBottom: "15px",
                           }}
                         >
-                          <InputLabel>Hidden Ability</InputLabel>
-                          <Select onChange={handleChangeAbi2}>
+                          <InputLabel>Ability 2</InputLabel>
+                          <Select onChange={handleChangeAbi3}>
                             {ability
                               .sort((a, b) =>
                                 a.ability.localeCompare(b.ability)
@@ -309,6 +315,27 @@ function Signup() {
                         </FormControl>
                       </Grid>
                     </Grid>
+                    <Grid item xs={12}>
+                      <FormControl
+                        variant="standard"
+                        sx={{
+                          width: "100%",
+                          marginBottom: "15px",
+                        }}
+                      >
+                        <InputLabel>Hidden Ability</InputLabel>
+                        <Select onChange={handleChangeAbi2}>
+                          {ability
+                            .sort((a, b) => a.ability.localeCompare(b.ability))
+                            .map((card, index) => (
+                              <MenuItem value={card.ability} key={index}>
+                                {card.ability}
+                              </MenuItem>
+                            ))}
+                        </Select>
+                      </FormControl>
+                    </Grid>
+
                     <Grid item xs={12}>
                       <TextField
                         id="outlined-basic"
@@ -353,8 +380,8 @@ function Signup() {
                         }}
                         variant="outlined"
                         InputProps={{
-                          endAdornment: (
-                            <InputAdornment position="end">
+                          startAdornment: (
+                            <InputAdornment position="start">
                               Pokémon
                             </InputAdornment>
                           ),
