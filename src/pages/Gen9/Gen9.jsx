@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Grid,
   Typography,
@@ -17,6 +17,7 @@ import {
   Paper,
 } from "@mui/material";
 import useGen9 from "../../utils/gen9Utils";
+import { allAbility } from "../../services/pokeAPI";
 import Loading from "../../components/Loading/Loading";
 import Grass from "../../assets/type/Grass.png";
 import Grass_full from "../../assets/type/Grass_v2.png";
@@ -27,8 +28,25 @@ import Water_full from "../../assets/type/Water_v2.png";
 
 function Gen9() {
   const [showModal, setShowModal] = useState(false);
+  const [showNestedModal, setShowNestedModal] = useState(false);
   const [selectedCard, setSelectedCard] = useState("");
+  const [abilityInfo, setAbilityInfo] = useState("");
+  const [ability, setAbility] = useState([]);
+  const { gen9, loadingGen9 } = useGen9();
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const fetchedAbility = await allAbility();
+        setAbility(fetchedAbility);
+      } catch (error) {
+        console.error("Error fetching type:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  console.log(gen9);
   const handleOpenModal = (cardInfo) => {
     setSelectedCard(cardInfo);
     setShowModal(true);
@@ -36,6 +54,18 @@ function Gen9() {
 
   const handleCloseModal = () => {
     setShowModal(false);
+  };
+
+  const handleOpenNestedModal = (name) => {
+    const abilityCard = ability.find((ability) => ability.ability === name);
+    if (abilityCard) {
+      setAbilityInfo(abilityCard);
+      setShowNestedModal(true);
+    }
+  };
+
+  const handleCloseNestedModal = () => {
+    setShowNestedModal(false);
   };
 
   const styles = {
@@ -63,14 +93,26 @@ function Gen9() {
       padding: "20px", // Adjust padding as needed
       overflow: "auto",
     },
+    nestedmodal: {
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      width: "90%", // Adjust the width as needed for smaller screens
+      maxWidth: "400px", // Set a maximum width
+      maxHeight: "75vh", // Set a maximum height relative to the viewport height
+      backgroundColor: "white", // Use the appropriate background color
+      boxShadow: "0 0 24px rgba(0, 0, 0, 0.5)", // Adjust the box shadow as needed
+      borderRadius: "10px", // Use appropriate border radius
+      padding: "20px", // Adjust padding as needed
+      overflow: "auto",
+    },
     scrollbar: {
       "&::-webkit-scrollbar": {
         display: "none",
       },
     },
   };
-
-  const { gen9, loadingGen9 } = useGen9();
 
   if (loadingGen9) {
     return <Loading />;
@@ -209,6 +251,7 @@ function Gen9() {
         }}
       ></div>
       <br />
+
       <Modal
         open={showModal}
         onClose={handleCloseModal}
@@ -291,7 +334,7 @@ function Gen9() {
                       textAlign: "center",
                     }}
                   >
-                    Category
+                    Chủng loại
                   </TableCell>
                   <TableCell
                     style={{
@@ -299,7 +342,7 @@ function Gen9() {
                       textAlign: "center",
                     }}
                   >
-                    Ability
+                    Đặc tính
                   </TableCell>
                   <TableCell
                     style={{
@@ -307,7 +350,7 @@ function Gen9() {
                       textAlign: "center",
                     }}
                   >
-                    Hidden Ability
+                    Đặc tính ẩn
                   </TableCell>
                 </TableRow>
               </TableHead>
@@ -322,18 +365,38 @@ function Gen9() {
                     {selectedCard.category}
                   </TableCell>
                   <TableCell
+                    onClick={() => handleOpenNestedModal(selectedCard.ability)}
                     style={{
                       border: "1px solid black",
                       textAlign: "center",
+                      cursor: "pointer",
+                      transition: "all 0.3s",
                     }}
+                    onMouseEnter={(e) =>
+                      (e.target.style.backgroundColor = "lightgray")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.target.style.backgroundColor = "white")
+                    }
                   >
                     {selectedCard.ability}
                   </TableCell>
                   <TableCell
+                    onClick={() =>
+                      handleOpenNestedModal(selectedCard.hid_ability)
+                    }
                     style={{
                       border: "1px solid black",
                       textAlign: "center",
+                      cursor: "pointer",
+                      transition: "all 0.3s",
                     }}
+                    onMouseEnter={(e) =>
+                      (e.target.style.backgroundColor = "lightgray")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.target.style.backgroundColor = "white")
+                    }
                   >
                     {selectedCard.hid_ability}
                   </TableCell>
@@ -367,15 +430,30 @@ function Gen9() {
               marginTop: "30px",
             }}
           ></div>
-          {/* <Stack direction="row" justifyContent="center" marginTop={4}>
-            <Button
-              variant="contained"
-              sx={styles.button}
-              onClick={handleCloseModal}
-            >
-              Cancel
-            </Button>
-          </Stack> */}
+        </Box>
+      </Modal>
+
+      <Modal
+        open={showNestedModal}
+        onClose={handleCloseNestedModal}
+        aria-labelledby="parent-modal-title"
+        aria-describedby="parent-modal-description"
+      >
+        <Box sx={{ ...styles.nestedmodal, ...styles.scrollbar }}>
+          <Typography id="place-book-modal" variant="h4" textAlign="center">
+            <b>{abilityInfo.ability}</b>
+          </Typography>
+          <Typography variant="body1" textAlign="justify" marginTop={2}>
+            {abilityInfo.info}
+          </Typography>
+          <div
+            style={{
+              borderTop: "2px solid black",
+              width: "90%",
+              margin: "10px auto",
+              marginTop: "30px",
+            }}
+          ></div>
         </Box>
       </Modal>
     </>

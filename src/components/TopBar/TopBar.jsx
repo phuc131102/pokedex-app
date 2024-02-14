@@ -22,7 +22,7 @@ function TopBar() {
     setAnchorElNav(null);
   };
 
-  const [activeTab, setActiveTab] = React.useState("catalog");
+  const [activeTab, setActiveTab] = React.useState("gen9");
 
   useEffect(() => {
     const storedActiveTab = localStorage.getItem("activeTab");
@@ -107,6 +107,21 @@ function TopBar() {
                     }}
                   >
                     Gen 9
+                  </Typography>
+                </MenuItem>
+                <MenuItem>
+                  <Typography
+                    component={Link}
+                    to="/add"
+                    onClick={() => handleTabClick("add")}
+                    textAlign="center"
+                    sx={{
+                      fontWeight: 700,
+                      color: activeTab === "add" ? "red" : "inherit",
+                      textDecoration: "none",
+                    }}
+                  >
+                    Add Pokemon
                   </Typography>
                 </MenuItem>
               </Menu>
