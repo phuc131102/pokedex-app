@@ -232,7 +232,7 @@ function Gen9() {
                                 ? Water
                                 : card.type1 === "Normal"
                                 ? Normal
-                                : form.type1 === "Electric"
+                                : card.type1 === "Electric"
                                 ? Electric
                                 : null
                             }
@@ -253,7 +253,7 @@ function Gen9() {
                                   ? Water
                                   : card.type1 === "Normal"
                                   ? Normal
-                                  : form.type1 === "Electric"
+                                  : card.type1 === "Electric"
                                   ? Electric
                                   : null
                               }
