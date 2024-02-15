@@ -27,6 +27,8 @@ import Water from "../../assets/type/Water.png";
 import Water_full from "../../assets/type/Water_v2.png";
 import Normal from "../../assets/type/Normal.png";
 import Normal_full from "../../assets/type/Normal_v2.png";
+import Electric from "../../assets/type/Electric.png";
+import Electric_full from "../../assets/type/Electric_v2.png";
 
 function Gen9() {
   const [showModal, setShowModal] = useState(false);
@@ -230,6 +232,8 @@ function Gen9() {
                                 ? Water
                                 : card.type1 === "Normal"
                                 ? Normal
+                                : form.type1 === "Electric"
+                                ? Electric
                                 : null
                             }
                             alt="Grass"
@@ -249,6 +253,8 @@ function Gen9() {
                                   ? Water
                                   : card.type1 === "Normal"
                                   ? Normal
+                                  : form.type1 === "Electric"
+                                  ? Electric
                                   : null
                               }
                               alt="Grass"
@@ -328,6 +334,8 @@ function Gen9() {
                   ? Water_full
                   : selectedCard.type1 === "Normal"
                   ? Normal_full
+                  : selectedCard.type1 === "Electric"
+                  ? Electric_full
                   : null
               }
               alt="Grass"
@@ -347,6 +355,8 @@ function Gen9() {
                     ? Water_full
                     : selectedCard.type1 === "Normal"
                     ? Normal_full
+                    : selectedCard.type1 === "Electric"
+                    ? Electric_full
                     : null
                 }
                 alt="Grass"
@@ -601,6 +611,8 @@ function Gen9() {
                           ? Water
                           : form.type1 === "Normal"
                           ? Normal
+                          : form.type1 === "Electric"
+                          ? Electric
                           : null
                       }
                       alt="Grass"
@@ -620,6 +632,8 @@ function Gen9() {
                             ? Water
                             : form.type1 === "Normal"
                             ? Normal
+                            : form.type1 === "Electric"
+                            ? Electric
                             : null
                         }
                         alt="Grass"
