@@ -92,6 +92,8 @@ function Signup() {
     ability2: "",
     hid_ability: "",
     category: "",
+    form1: "",
+    form2: "",
     name: "",
     info_en: "",
     // info_vn: "",
@@ -392,6 +394,44 @@ function Signup() {
                         onChange={handleChange}
                       />
                     </Grid>
+
+                    <Grid container spacing={2}>
+                      <Grid item xs={6}>
+                        <TextField
+                          id="outlined-basic"
+                          sx={{
+                            width: "100%",
+                            [`& fieldset`]: { borderRadius: 8 },
+
+                            marginBottom: "15px",
+                          }}
+                          variant="outlined"
+                          multiline
+                          label="Form 1"
+                          name="form1"
+                          value={formData.form1}
+                          onChange={handleChange}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <TextField
+                          id="outlined-basic"
+                          sx={{
+                            width: "100%",
+                            [`& fieldset`]: { borderRadius: 8 },
+
+                            marginBottom: "15px",
+                          }}
+                          variant="outlined"
+                          multiline
+                          label="Form 2"
+                          name="form2"
+                          value={formData.form2}
+                          onChange={handleChange}
+                        />
+                      </Grid>
+                    </Grid>
+
                     <Grid container spacing={2}>
                       <Grid item xs={6}>
                         {avatarBase64 ? (

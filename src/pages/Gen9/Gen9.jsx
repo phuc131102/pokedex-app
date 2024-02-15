@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Grid,
   Typography,
@@ -33,8 +33,10 @@ function Gen9() {
   const [showNestedModal, setShowNestedModal] = useState(false);
   const [selectedCard, setSelectedCard] = useState("");
   const [abilityInfo, setAbilityInfo] = useState("");
+  const [form, setForm] = useState("");
   const [ability, setAbility] = useState([]);
   const { gen9, loadingGen9 } = useGen9();
+  const modalContentRef = useRef(null); // Ref for modal content
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,13 +47,18 @@ function Gen9() {
         console.error("Error fetching type:", error);
       }
     };
-
     fetchData();
   }, []);
-  console.log(gen9);
+
   const handleOpenModal = (cardInfo) => {
     setSelectedCard(cardInfo);
     setShowModal(true);
+    if (cardInfo.form2 !== "") {
+      findForm(cardInfo.name, cardInfo.form2);
+    }
+    if (modalContentRef.current) {
+      modalContentRef.current.scrollTop = 0;
+    }
   };
 
   const handleCloseModal = () => {
@@ -68,6 +75,15 @@ function Gen9() {
 
   const handleCloseNestedModal = () => {
     setShowNestedModal(false);
+  };
+
+  const findForm = (name, form2) => {
+    const abilityCard = gen9.find(
+      (gen9) => gen9.name === name && gen9.form1 === form2
+    );
+    if (abilityCard) {
+      setForm(abilityCard);
+    } else return null;
   };
 
   const styles = {
@@ -196,6 +212,7 @@ function Gen9() {
                         >
                           <b>{card.name}</b>
                         </Typography>
+
                         <div
                           style={{
                             display: "flex",
@@ -264,13 +281,21 @@ function Gen9() {
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <Box sx={{ ...styles.modal, ...styles.scrollbar }}>
+        <Box
+          sx={{ ...styles.modal, ...styles.scrollbar }}
+          ref={modalContentRef}
+        >
           <Typography id="place-book-modal" variant="h6" textAlign="center">
             <b>#{selectedCard.num}</b>
           </Typography>
           <Typography id="place-book-modal" variant="h4" textAlign="center">
             <b>{selectedCard.name}</b>
           </Typography>
+          {selectedCard.form1 !== "" ? (
+            <Typography id="place-book-modal" variant="h6" textAlign="center">
+              <b>{selectedCard.form1}</b>
+            </Typography>
+          ) : null}
           <div
             style={{
               display: "flex",
@@ -504,8 +529,108 @@ function Gen9() {
               width: "90%",
               margin: "10px auto",
               marginTop: "30px",
+              marginBottom: "30px",
             }}
           ></div>
+          {selectedCard.form2 !== "" ? (
+            <Card
+              sx={{
+                backgroundColor: "white",
+                borderRadius: "20px",
+                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
+                width: "50%",
+                margin: "auto",
+              }}
+            >
+              <CardActionArea onClick={() => handleOpenModal(form)}>
+                <CardMedia
+                  component="img"
+                  sx={{ width: 100, margin: "auto" }}
+                  image={form.icon}
+                  alt={form.name}
+                />
+                <CardContent>
+                  <Typography
+                    sx={{
+                      fontSize: 20,
+                      textAlign: "center",
+                      lineHeight: "1.2",
+                      maxHeight: "1.2em",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      display: "block",
+                    }}
+                    color="text.primary"
+                    gutterBottom
+                  >
+                    <b>{form.name}</b>
+                  </Typography>
+
+                  <Typography
+                    sx={{
+                      fontSize: 15,
+                      textAlign: "center",
+                      lineHeight: "1.2",
+                      maxHeight: "1.2em",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      display: "block",
+                    }}
+                    color="text.primary"
+                    gutterBottom
+                  >
+                    <b>{form.form1}</b>
+                  </Typography>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <img
+                      src={
+                        form.type1 === "Grass"
+                          ? Grass
+                          : form.type1 === "Fire"
+                          ? Fire
+                          : form.type1 === "Water"
+                          ? Water
+                          : form.type1 === "Normal"
+                          ? Normal
+                          : null
+                      }
+                      alt="Grass"
+                      width={"15%"}
+                      style={{
+                        marginRight: form.type2 !== "" ? "10px" : null,
+                      }}
+                    />
+                    {form.type2 !== "" ? (
+                      <img
+                        src={
+                          form.type1 === "Grass"
+                            ? Grass
+                            : form.type1 === "Fire"
+                            ? Fire
+                            : form.type1 === "Water"
+                            ? Water
+                            : form.type1 === "Normal"
+                            ? Normal
+                            : null
+                        }
+                        alt="Grass"
+                        width={"15%"}
+                      />
+                    ) : null}
+                  </div>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          ) : null}
         </Box>
       </Modal>
 
