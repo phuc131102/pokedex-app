@@ -51,7 +51,7 @@ function TopBar() {
               noWrap
               component={Link}
               to="/"
-              onClick={() => handleTabClick("gen9")}
+              onClick={() => handleTabClick("newest")}
               sx={{
                 mr: 2,
                 display: { xs: "none", md: "flex" },
@@ -98,6 +98,21 @@ function TopBar() {
                   <Typography
                     component={Link}
                     to="/"
+                    onClick={() => handleTabClick("newest")}
+                    textAlign="center"
+                    sx={{
+                      fontWeight: 700,
+                      color: activeTab === "newest" ? "red" : "inherit",
+                      textDecoration: "none",
+                    }}
+                  >
+                    Newest
+                  </Typography>
+                </MenuItem>
+                <MenuItem onClick={handleCloseNavMenu}>
+                  <Typography
+                    component={Link}
+                    to="/gen9"
                     onClick={() => handleTabClick("gen9")}
                     textAlign="center"
                     sx={{
@@ -132,7 +147,7 @@ function TopBar() {
               noWrap
               component={Link}
               to="/"
-              onClick={() => handleTabClick("gen9")}
+              onClick={() => handleTabClick("newest")}
               sx={{
                 mr: 2,
                 display: { xs: "flex", md: "none" },
@@ -152,6 +167,23 @@ function TopBar() {
                 noWrap
                 component={Link}
                 to="/"
+                onClick={() => handleTabClick("newest")}
+                sx={{
+                  mr: 4,
+                  ml: 4,
+                  display: { xs: "none", md: "flex" },
+                  fontWeight: 700,
+                  color: activeTab === "newest" ? "red" : "inherit",
+                  textDecoration: "none",
+                }}
+              >
+                Newest
+              </Typography>
+              <Typography
+                variant="h6"
+                noWrap
+                component={Link}
+                to="/gen9"
                 onClick={() => handleTabClick("gen9")}
                 sx={{
                   mr: 4,
