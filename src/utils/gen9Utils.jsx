@@ -10,7 +10,9 @@ export const useGen9 = () => {
       try {
         const fetchedJobs = await allGen9();
         setGen9(fetchedJobs);
-        setLoadingGen9(false);
+        setTimeout(() => {
+          setLoadingGen9(false);
+        }, 3000);
       } catch (error) {
         console.error("Error fetching jobs:", error);
       }
