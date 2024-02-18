@@ -3,6 +3,7 @@ import Fire_full from "../../assets/type/Fire_v2.png";
 import Water_full from "../../assets/type/Water_v2.png";
 import Normal_full from "../../assets/type/Normal_v2.png";
 import Electric_full from "../../assets/type/Electric_v2.png";
+import Fairy_full from "../../assets/type/Fairy_v2.png";
 import Dragon_full from "../../assets/type/Dragon_v2.png";
 
 const getImageSourceFull = (type) => {
