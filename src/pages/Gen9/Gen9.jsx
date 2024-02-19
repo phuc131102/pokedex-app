@@ -155,84 +155,86 @@ function Gen9() {
       >
         <CardContent>
           <Grid container spacing={5}>
-            {gen9.map((card, index) => (
-              <Grid item xs={6} sm={3} md={2} key={index}>
-                <Card
-                  sx={{
-                    backgroundColor: "white",
-                    borderRadius: "20px",
-                    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
-                  }}
-                >
-                  <CardActionArea onClick={() => handleOpenModal(card)}>
-                    <CardMedia
-                      component="img"
-                      sx={{ width: 100, margin: "auto" }}
-                      image={card.icon}
-                      alt={card.name}
-                    />
-                    <CardContent>
-                      <Typography
-                        sx={{
-                          fontSize: 15,
-                          textAlign: "center",
-                          lineHeight: "1.2",
-                          maxHeight: "1.2em",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap",
-                          display: "block",
-                        }}
-                        color="text.primary"
-                        gutterBottom
-                      >
-                        <b>#{card.num}</b>
-                      </Typography>
-                      <Typography
-                        sx={{
-                          fontSize: 20,
-                          textAlign: "center",
-                          lineHeight: "1.2",
-                          maxHeight: "1.2em",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap",
-                          display: "block",
-                        }}
-                        color="text.primary"
-                        gutterBottom
-                      >
-                        <b>{card.name}</b>
-                      </Typography>
-
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <img
-                          src={getImageSource(card.type1)}
-                          alt="card.type1"
-                          width={"15%"}
-                          style={{
-                            marginRight: card.type2 !== "" ? "10px" : null,
+            {gen9
+              .sort((a, b) => a.num - b.num)
+              .map((card, index) => (
+                <Grid item xs={6} sm={3} md={2} key={index}>
+                  <Card
+                    sx={{
+                      backgroundColor: "white",
+                      borderRadius: "20px",
+                      boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
+                    }}
+                  >
+                    <CardActionArea onClick={() => handleOpenModal(card)}>
+                      <CardMedia
+                        component="img"
+                        sx={{ width: 100, margin: "auto" }}
+                        image={card.icon}
+                        alt={card.name}
+                      />
+                      <CardContent>
+                        <Typography
+                          sx={{
+                            fontSize: 15,
+                            textAlign: "center",
+                            lineHeight: "1.2",
+                            maxHeight: "1.2em",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                            display: "block",
                           }}
-                        />
-                        {card.type2 !== "" ? (
+                          color="text.primary"
+                          gutterBottom
+                        >
+                          <b>#{card.num}</b>
+                        </Typography>
+                        <Typography
+                          sx={{
+                            fontSize: 20,
+                            textAlign: "center",
+                            lineHeight: "1.2",
+                            maxHeight: "1.2em",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                            display: "block",
+                          }}
+                          color="text.primary"
+                          gutterBottom
+                        >
+                          <b>{card.name}</b>
+                        </Typography>
+
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
                           <img
-                            src={getImageSource(card.type2)}
-                            alt={card.type1}
+                            src={getImageSource(card.type1)}
+                            alt="card.type1"
                             width={"15%"}
+                            style={{
+                              marginRight: card.type2 !== "" ? "10px" : null,
+                            }}
                           />
-                        ) : null}
-                      </div>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
-              </Grid>
-            ))}
+                          {card.type2 !== "" ? (
+                            <img
+                              src={getImageSource(card.type2)}
+                              alt={card.type1}
+                              width={"15%"}
+                            />
+                          ) : null}
+                        </div>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </Grid>
+              ))}
           </Grid>
         </CardContent>
       </Card>

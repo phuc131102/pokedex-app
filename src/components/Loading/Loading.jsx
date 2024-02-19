@@ -11,7 +11,7 @@ function Loading() {
         height: "100vh",
       }}
     >
-      <CircularProgress variant="success" />
+      <CircularProgress color="success" />
     </div>
   );
 }

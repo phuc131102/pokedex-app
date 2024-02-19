@@ -5,6 +5,7 @@ import Normal from "../../assets/type/Normal.png";
 import Electric from "../../assets/type/Electric.png";
 import Fairy from "../../assets/type/Fairy.png";
 import Dragon from "../../assets/type/Dragon.png";
+import Fighting from "../../assets/type/Fighting.png";
 
 const getImageSource = (type) => {
   switch (type) {
@@ -22,6 +23,8 @@ const getImageSource = (type) => {
       return Fairy;
     case "Dragon":
       return Dragon;
+    case "Fighting":
+      return Fighting;
     default:
       return null;
   }
