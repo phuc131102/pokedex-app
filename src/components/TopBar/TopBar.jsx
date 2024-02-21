@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -21,21 +21,6 @@ function TopBar() {
     setAnchorElNav(null);
   };
 
-  const [activeTab, setActiveTab] = React.useState("gen9");
-
-  useEffect(() => {
-    const storedActiveTab = localStorage.getItem("activeTab");
-
-    if (storedActiveTab) {
-      setActiveTab(storedActiveTab);
-    }
-  }, []);
-
-  const handleTabClick = (tab) => {
-    setActiveTab(tab);
-    localStorage.setItem("activeTab", tab);
-  };
-
   return (
     <div>
       <AppBar
@@ -49,14 +34,13 @@ function TopBar() {
               noWrap
               component={Link}
               to="/"
-              onClick={() => handleTabClick("newest")}
               sx={{
                 mr: 2,
                 display: { xs: "none", md: "flex" },
                 fontFamily: "monospace",
                 fontWeight: 700,
                 letterSpacing: ".3rem",
-                color: "inherit",
+                color: "red",
                 textDecoration: "none",
               }}
             >
@@ -96,11 +80,10 @@ function TopBar() {
                   <Typography
                     component={Link}
                     to="/"
-                    onClick={() => handleTabClick("newest")}
                     textAlign="center"
                     sx={{
                       fontWeight: 700,
-                      color: activeTab === "newest" ? "red" : "inherit",
+                      color: "inherit",
                       textDecoration: "none",
                     }}
                   >
@@ -111,11 +94,10 @@ function TopBar() {
                   <Typography
                     component={Link}
                     to="/gen9"
-                    onClick={() => handleTabClick("gen9")}
                     textAlign="center"
                     sx={{
                       fontWeight: 700,
-                      color: activeTab === "gen9" ? "red" : "inherit",
+                      color: "inherit",
                       textDecoration: "none",
                     }}
                   >
@@ -126,11 +108,10 @@ function TopBar() {
                   <Typography
                     component={Link}
                     to="/add"
-                    onClick={() => handleTabClick("add")}
                     textAlign="center"
                     sx={{
                       fontWeight: 700,
-                      color: activeTab === "add" ? "red" : "inherit",
+                      color: "inherit",
                       textDecoration: "none",
                     }}
                   >
@@ -144,7 +125,6 @@ function TopBar() {
               noWrap
               component={Link}
               to="/"
-              onClick={() => handleTabClick("newest")}
               sx={{
                 mr: 2,
                 display: { xs: "flex", md: "none" },
@@ -153,7 +133,7 @@ function TopBar() {
                 fontWeight: 700,
                 letterSpacing: ".3rem",
                 textDecoration: "none",
-                color: "inherit",
+                color: "red",
               }}
             >
               Pokédex
@@ -164,13 +144,12 @@ function TopBar() {
                 noWrap
                 component={Link}
                 to="/"
-                onClick={() => handleTabClick("newest")}
                 sx={{
                   mr: 4,
                   ml: 4,
                   display: { xs: "none", md: "flex" },
                   fontWeight: 700,
-                  color: activeTab === "newest" ? "red" : "inherit",
+                  color: "inherit",
                   textDecoration: "none",
                 }}
               >
@@ -181,13 +160,12 @@ function TopBar() {
                 noWrap
                 component={Link}
                 to="/gen9"
-                onClick={() => handleTabClick("gen9")}
                 sx={{
                   mr: 4,
                   ml: 4,
                   display: { xs: "none", md: "flex" },
                   fontWeight: 700,
-                  color: activeTab === "gen9" ? "red" : "inherit",
+                  color: "inherit",
                   textDecoration: "none",
                 }}
               >
@@ -198,13 +176,12 @@ function TopBar() {
                 noWrap
                 component={Link}
                 to="/add"
-                onClick={() => handleTabClick("add")}
                 sx={{
                   mr: 4,
                   ml: 4,
                   display: { xs: "none", md: "flex" },
                   fontWeight: 700,
-                  color: activeTab === "add" ? "red" : "inherit",
+                  color: "inherit",
                   textDecoration: "none",
                 }}
               >
