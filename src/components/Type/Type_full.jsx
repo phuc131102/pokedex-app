@@ -7,6 +7,7 @@ import Fairy_full from "../../assets/type/Fairy_v2.png";
 import Dragon_full from "../../assets/type/Dragon_v2.png";
 import Fighting_full from "../../assets/type/Fighting_v2.png";
 import Flying_full from "../../assets/type/Flying_v2.png";
+import Poison_full from "../../assets/type/Poison_v2.png";
 
 const getImageSourceFull = (type) => {
   switch (type) {
@@ -28,6 +29,8 @@ const getImageSourceFull = (type) => {
       return Fighting_full;
     case "Flying":
       return Flying_full;
+    case "Poison":
+      return Poison_full;
     default:
       return null;
   }
