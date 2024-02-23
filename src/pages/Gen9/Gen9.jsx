@@ -28,6 +28,7 @@ function Gen9() {
   const [selectedCard, setSelectedCard] = useState("");
   const [abilityInfo, setAbilityInfo] = useState("");
   const [form, setForm] = useState("");
+  const [form2, setForm2] = useState("");
   const [ability, setAbility] = useState([]);
   const { gen9, loadingGen9 } = useGen9();
   const modalContentRef = useRef(null);
@@ -49,6 +50,9 @@ function Gen9() {
     setShowModal(true);
     if (cardInfo.form2 !== "") {
       findForm(cardInfo.name, cardInfo.form2);
+    }
+    if (cardInfo.form3 !== "") {
+      findForm2(cardInfo.name, cardInfo.form3);
     }
     if (modalContentRef.current) {
       modalContentRef.current.scrollTop = 0;
@@ -77,6 +81,15 @@ function Gen9() {
     );
     if (abilityCard) {
       setForm(abilityCard);
+    } else return null;
+  };
+
+  const findForm2 = (name, form3) => {
+    const abilityCard = gen9.find(
+      (gen9) => gen9.name === name && gen9.form1 === form3
+    );
+    if (abilityCard) {
+      setForm2(abilityCard);
     } else return null;
   };
 
@@ -556,6 +569,86 @@ function Gen9() {
                     {form.type2 !== "" ? (
                       <img
                         src={getImageSource(form.type2)}
+                        alt="Grass"
+                        width={"15%"}
+                      />
+                    ) : null}
+                  </div>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          ) : null}
+          {selectedCard.form3 !== "" ? (
+            <Card
+              sx={{
+                backgroundColor: "white",
+                borderRadius: "20px",
+                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
+                width: "50%",
+                margin: "auto",
+                marginTop: "30px",
+              }}
+            >
+              <CardActionArea onClick={() => handleOpenModal(form2)}>
+                <CardMedia
+                  component="img"
+                  sx={{ width: 100, margin: "auto" }}
+                  image={form2.icon}
+                  alt={form2.name}
+                />
+                <CardContent>
+                  <Typography
+                    sx={{
+                      fontSize: 20,
+                      textAlign: "center",
+                      lineHeight: "1.2",
+                      maxHeight: "1.2em",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      display: "block",
+                    }}
+                    color="text.primary"
+                    gutterBottom
+                  >
+                    <b>{form2.name}</b>
+                  </Typography>
+
+                  <Typography
+                    sx={{
+                      fontSize: 15,
+                      textAlign: "center",
+                      lineHeight: "1.2",
+                      maxHeight: "1.2em",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      display: "block",
+                    }}
+                    color="text.primary"
+                    gutterBottom
+                  >
+                    <b>{form2.form1}</b>
+                  </Typography>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <img
+                      src={getImageSource(form2.type1)}
+                      alt="Grass"
+                      width={"15%"}
+                      style={{
+                        marginRight: form2.type2 !== "" ? "10px" : null,
+                      }}
+                    />
+                    {form2.type2 !== "" ? (
+                      <img
+                        src={getImageSource(form2.type2)}
                         alt="Grass"
                         width={"15%"}
                       />

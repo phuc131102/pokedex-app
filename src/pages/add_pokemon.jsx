@@ -94,9 +94,9 @@ function Signup() {
     category: "",
     form1: "",
     form2: "",
+    form3: "",
     name: "",
     info_en: "",
-    // info_vn: "",
     image: "",
     icon: "",
   });
@@ -406,7 +406,6 @@ function Signup() {
                             marginBottom: "15px",
                           }}
                           variant="outlined"
-                          multiline
                           label="Form 1"
                           name="form1"
                           value={formData.form1}
@@ -423,13 +422,29 @@ function Signup() {
                             marginBottom: "15px",
                           }}
                           variant="outlined"
-                          multiline
                           label="Form 2"
                           name="form2"
                           value={formData.form2}
                           onChange={handleChange}
                         />
                       </Grid>
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <TextField
+                        id="outlined-basic"
+                        sx={{
+                          width: "100%",
+                          [`& fieldset`]: { borderRadius: 8 },
+
+                          marginBottom: "15px",
+                        }}
+                        variant="outlined"
+                        label="Form 3"
+                        name="form3"
+                        value={formData.form3}
+                        onChange={handleChange}
+                      />
                     </Grid>
 
                     <Grid container spacing={2}>
