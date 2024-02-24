@@ -10,6 +10,7 @@ import Flying from "../../assets/type/Flying.png";
 import Poison from "../../assets/type/Poison.png";
 import Rock from "../../assets/type/Rock.png";
 import Ground from "../../assets/type/Ground.png";
+import Ghost from "../../assets/type/Ghost.png";
 
 const getImageSource = (type) => {
   switch (type) {
@@ -37,6 +38,8 @@ const getImageSource = (type) => {
       return Rock;
     case "Ground":
       return Ground;
+    case "Ghost":
+      return Ghost;
     default:
       return null;
   }

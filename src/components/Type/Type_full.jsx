@@ -10,6 +10,7 @@ import Flying_full from "../../assets/type/Flying_v2.png";
 import Poison_full from "../../assets/type/Poison_v2.png";
 import Rock_full from "../../assets/type/Rock_v2.png";
 import Ground_full from "../../assets/type/Ground_v2.png";
+import Ghost_full from "../../assets/type/Ghost_v2.png";
 
 const getImageSourceFull = (type) => {
   switch (type) {
@@ -37,6 +38,8 @@ const getImageSourceFull = (type) => {
       return Rock_full;
     case "Ground":
       return Ground_full;
+    case "Ghost":
+      return Ghost_full;
     default:
       return null;
   }
