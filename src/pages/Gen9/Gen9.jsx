@@ -367,14 +367,16 @@ function Gen9() {
                       </TableCell>
                     </>
                   )}
-                  <TableCell
-                    style={{
-                      border: "1px solid black",
-                      textAlign: "center",
-                    }}
-                  >
-                    Đặc tính ẩn
-                  </TableCell>
+                  {selectedCard.hid_ability !== "" ? (
+                    <TableCell
+                      style={{
+                        border: "1px solid black",
+                        textAlign: "center",
+                      }}
+                    >
+                      Đặc tính ẩn
+                    </TableCell>
+                  ) : null}
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -449,25 +451,27 @@ function Gen9() {
                       </TableCell>
                     </>
                   )}
-                  <TableCell
-                    onClick={() =>
-                      handleOpenNestedModal(selectedCard.hid_ability)
-                    }
-                    style={{
-                      border: "1px solid black",
-                      textAlign: "center",
-                      cursor: "pointer",
-                      transition: "all 0.3s",
-                    }}
-                    onMouseEnter={(e) =>
-                      (e.target.style.backgroundColor = "lightgray")
-                    }
-                    onMouseLeave={(e) =>
-                      (e.target.style.backgroundColor = "white")
-                    }
-                  >
-                    {selectedCard.hid_ability}
-                  </TableCell>
+                  {selectedCard.hid_ability !== "" ? (
+                    <TableCell
+                      onClick={() =>
+                        handleOpenNestedModal(selectedCard.hid_ability)
+                      }
+                      style={{
+                        border: "1px solid black",
+                        textAlign: "center",
+                        cursor: "pointer",
+                        transition: "all 0.3s",
+                      }}
+                      onMouseEnter={(e) =>
+                        (e.target.style.backgroundColor = "lightgray")
+                      }
+                      onMouseLeave={(e) =>
+                        (e.target.style.backgroundColor = "white")
+                      }
+                    >
+                      {selectedCard.hid_ability}
+                    </TableCell>
+                  ) : null}
                 </TableRow>
               </TableBody>
             </Table>
