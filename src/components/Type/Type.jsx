@@ -11,6 +11,11 @@ import Poison from "../../assets/type/Poison.png";
 import Rock from "../../assets/type/Rock.png";
 import Ground from "../../assets/type/Ground.png";
 import Ghost from "../../assets/type/Ghost.png";
+import Steel from "../../assets/type/Steel.png";
+import Dark from "../../assets/type/Dark.png";
+import Psychic from "../../assets/type/Psychic.png";
+import Ice from "../../assets/type/Ice.png";
+import Bug from "../../assets/type/Bug.png";
 
 const getImageSource = (type) => {
   switch (type) {
@@ -40,6 +45,16 @@ const getImageSource = (type) => {
       return Ground;
     case "Ghost":
       return Ghost;
+    case "Steel":
+      return Steel;
+    case "Dark":
+      return Dark;
+    case "Psychic":
+      return Psychic;
+    case "Ice":
+      return Ice;
+    case "Bug":
+      return Bug;
     default:
       return null;
   }

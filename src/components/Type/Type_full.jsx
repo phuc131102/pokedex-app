@@ -11,6 +11,11 @@ import Poison_full from "../../assets/type/Poison_v2.png";
 import Rock_full from "../../assets/type/Rock_v2.png";
 import Ground_full from "../../assets/type/Ground_v2.png";
 import Ghost_full from "../../assets/type/Ghost_v2.png";
+import Steel_full from "../../assets/type/Steel_v2.png";
+import Dark_full from "../../assets/type/Dark_v2.png";
+import Psychic_full from "../../assets/type/Psychic_v2.png";
+import Ice_full from "../../assets/type/Ice_v2.png";
+import Bug_full from "../../assets/type/Bug_v2.png";
 
 const getImageSourceFull = (type) => {
   switch (type) {
@@ -40,6 +45,16 @@ const getImageSourceFull = (type) => {
       return Ground_full;
     case "Ghost":
       return Ghost_full;
+    case "Steel":
+      return Steel_full;
+    case "Dark":
+      return Dark_full;
+    case "Psychic":
+      return Psychic_full;
+    case "Ice":
+      return Ice_full;
+    case "Bug":
+      return Bug_full;
     default:
       return null;
   }
