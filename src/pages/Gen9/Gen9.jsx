@@ -22,6 +22,8 @@ import Loading from "../../components/Loading/Loading";
 import getImageSource from "../../components/Type/Type";
 import getImageSourceFull from "../../components/Type/Type_full";
 
+//redeploymemnt
+
 function Gen9() {
   const [showModal, setShowModal] = useState(false);
   const [showNestedModal, setShowNestedModal] = useState(false);
