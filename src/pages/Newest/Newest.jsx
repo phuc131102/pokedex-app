@@ -29,6 +29,9 @@ function Gen9() {
   const [abilityInfo, setAbilityInfo] = useState("");
   const [form, setForm] = useState("");
   const [form2, setForm2] = useState("");
+  const [lv1, setLv1] = useState("");
+  const [lv2, setLv2] = useState("");
+  const [lv3, setLv3] = useState("");
   const [ability, setAbility] = useState([]);
   const { gen9, loadingGen9 } = useGen9();
   const modalContentRef = useRef(null);
@@ -53,6 +56,15 @@ function Gen9() {
     }
     if (cardInfo.form3 !== "") {
       findForm2(cardInfo.name, cardInfo.form3);
+    }
+    if (cardInfo.lv1) {
+      findLv1(cardInfo.lv1);
+    }
+    if (cardInfo.lv2) {
+      findLv2(cardInfo.lv2);
+    }
+    if (cardInfo.lv3) {
+      findLv3(cardInfo.lv3);
     }
     if (modalContentRef.current) {
       modalContentRef.current.scrollTop = 0;
@@ -90,6 +102,27 @@ function Gen9() {
     );
     if (abilityCard) {
       setForm2(abilityCard);
+    } else return null;
+  };
+
+  const findLv1 = (lv1) => {
+    const abilityCard = gen9.find((gen9) => gen9.name === lv1);
+    if (abilityCard) {
+      setLv1(abilityCard);
+    } else return null;
+  };
+
+  const findLv2 = (lv2) => {
+    const abilityCard = gen9.find((gen9) => gen9.name === lv2);
+    if (abilityCard) {
+      setLv2(abilityCard);
+    } else return null;
+  };
+
+  const findLv3 = (lv3) => {
+    const abilityCard = gen9.find((gen9) => gen9.name === lv3);
+    if (abilityCard) {
+      setLv3(abilityCard);
     } else return null;
   };
 
@@ -504,6 +537,7 @@ function Gen9() {
               marginBottom: "30px",
             }}
           ></div>
+
           {selectedCard.form2 !== "" ? (
             <Card
               sx={{
@@ -663,6 +697,287 @@ function Gen9() {
                 </CardContent>
               </CardActionArea>
             </Card>
+          ) : null}
+          {selectedCard.form2 !== "" || selectedCard.form3 !== "" ? (
+            <div
+              style={{
+                borderTop: "2px solid black",
+                width: "90%",
+                margin: "10px auto",
+                marginTop: "30px",
+                marginBottom: "30px",
+              }}
+            ></div>
+          ) : null}
+          {selectedCard.lv1 || selectedCard.lv2 || selectedCard.lv3 ? (
+            <>
+              <Typography id="place-book-modal" variant="h6" textAlign="center">
+                <b>Evoluation</b>
+              </Typography>
+
+              <TableContainer
+                component={Paper}
+                style={{
+                  marginTop: "20px",
+                }}
+              >
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell
+                        style={{
+                          border: "1px solid black",
+                          textAlign: "center",
+                        }}
+                      >
+                        Chưa tiến hóa
+                      </TableCell>
+
+                      <TableCell
+                        style={{
+                          border: "1px solid black",
+                          textAlign: "center",
+                        }}
+                      >
+                        Tiến hóa lần 1
+                      </TableCell>
+                      {selectedCard.lv3 ? (
+                        <TableCell
+                          style={{
+                            border: "1px solid black",
+                            textAlign: "center",
+                          }}
+                        >
+                          Tiến hóa lần 2
+                        </TableCell>
+                      ) : null}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell
+                        style={{
+                          border: "1px solid black",
+                          textAlign: "center",
+                        }}
+                      >
+                        <Card
+                          sx={{
+                            backgroundColor: "white",
+                            borderRadius: "20px",
+                            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
+                            width: "100%",
+                            margin: "auto",
+                          }}
+                        >
+                          <CardActionArea onClick={() => handleOpenModal(lv1)}>
+                            <CardMedia
+                              component="img"
+                              sx={{ width: 100, margin: "auto" }}
+                              image={lv1.icon}
+                              alt={lv1.name}
+                            />
+                            <CardContent>
+                              <Typography
+                                sx={{
+                                  fontSize: 20,
+                                  textAlign: "center",
+                                  lineHeight: "1.2",
+                                  maxHeight: "1.2em",
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis",
+                                  whiteSpace: "nowrap",
+                                  display: "block",
+                                }}
+                                color="text.primary"
+                                gutterBottom
+                              >
+                                <b>{lv1.name}</b>
+                              </Typography>
+
+                              <div
+                                style={{
+                                  display: "flex",
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                }}
+                              >
+                                <img
+                                  src={getImageSource(lv1.type1)}
+                                  alt="Grass"
+                                  width={"15%"}
+                                  style={{
+                                    marginRight:
+                                      lv1.type2 !== "" ? "10px" : null,
+                                  }}
+                                />
+                                {lv1.type2 !== "" ? (
+                                  <img
+                                    src={getImageSource(lv1.type2)}
+                                    alt="Grass"
+                                    width={"15%"}
+                                  />
+                                ) : null}
+                              </div>
+                            </CardContent>
+                          </CardActionArea>
+                        </Card>
+                      </TableCell>
+
+                      <TableCell
+                        style={{
+                          border: "1px solid black",
+                          textAlign: "center",
+                        }}
+                      >
+                        <Card
+                          sx={{
+                            backgroundColor: "white",
+                            borderRadius: "20px",
+                            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
+                            width: "100%",
+                            margin: "auto",
+                          }}
+                        >
+                          <CardActionArea onClick={() => handleOpenModal(lv2)}>
+                            <CardMedia
+                              component="img"
+                              sx={{ width: 100, margin: "auto" }}
+                              image={lv2.icon}
+                              alt={lv2.name}
+                            />
+                            <CardContent>
+                              <Typography
+                                sx={{
+                                  fontSize: 20,
+                                  textAlign: "center",
+                                  lineHeight: "1.2",
+                                  maxHeight: "1.2em",
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis",
+                                  whiteSpace: "nowrap",
+                                  display: "block",
+                                }}
+                                color="text.primary"
+                                gutterBottom
+                              >
+                                <b>{lv2.name}</b>
+                              </Typography>
+
+                              <div
+                                style={{
+                                  display: "flex",
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                }}
+                              >
+                                <img
+                                  src={getImageSource(lv2.type1)}
+                                  alt="Grass"
+                                  width={"15%"}
+                                  style={{
+                                    marginRight:
+                                      lv2.type2 !== "" ? "10px" : null,
+                                  }}
+                                />
+                                {lv2.type2 !== "" ? (
+                                  <img
+                                    src={getImageSource(lv2.type2)}
+                                    alt="Grass"
+                                    width={"15%"}
+                                  />
+                                ) : null}
+                              </div>
+                            </CardContent>
+                          </CardActionArea>
+                        </Card>
+                      </TableCell>
+                      {selectedCard.lv3 ? (
+                        <TableCell
+                          style={{
+                            border: "1px solid black",
+                            textAlign: "center",
+                          }}
+                        >
+                          <Card
+                            sx={{
+                              backgroundColor: "white",
+                              borderRadius: "20px",
+                              boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
+                              width: "100%",
+                              margin: "auto",
+                            }}
+                          >
+                            <CardActionArea
+                              onClick={() => handleOpenModal(lv3)}
+                            >
+                              <CardMedia
+                                component="img"
+                                sx={{ width: 100, margin: "auto" }}
+                                image={lv3.icon}
+                                alt={lv3.name}
+                              />
+                              <CardContent>
+                                <Typography
+                                  sx={{
+                                    fontSize: 20,
+                                    textAlign: "center",
+                                    lineHeight: "1.2",
+                                    maxHeight: "1.2em",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                    whiteSpace: "nowrap",
+                                    display: "block",
+                                  }}
+                                  color="text.primary"
+                                  gutterBottom
+                                >
+                                  <b>{lv3.name}</b>
+                                </Typography>
+
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                  }}
+                                >
+                                  <img
+                                    src={getImageSource(lv3.type1)}
+                                    alt="Grass"
+                                    width={"15%"}
+                                    style={{
+                                      marginRight:
+                                        lv3.type2 !== "" ? "10px" : null,
+                                    }}
+                                  />
+                                  {lv3.type2 !== "" ? (
+                                    <img
+                                      src={getImageSource(lv3.type2)}
+                                      alt="Grass"
+                                      width={"15%"}
+                                    />
+                                  ) : null}
+                                </div>
+                              </CardContent>
+                            </CardActionArea>
+                          </Card>
+                        </TableCell>
+                      ) : null}
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </TableContainer>
+              <div
+                style={{
+                  borderTop: "2px solid black",
+                  width: "90%",
+                  margin: "10px auto",
+                  marginTop: "30px",
+                  marginBottom: "30px",
+                }}
+              ></div>
+            </>
           ) : null}
         </Box>
       </Modal>
