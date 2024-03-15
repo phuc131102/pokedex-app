@@ -795,7 +795,7 @@ function Gen9() {
                               </Typography>
                               <Typography
                                 sx={{
-                                  fontSize: 20,
+                                  fontSize: 15,
                                   textAlign: "center",
                                   lineHeight: "1.2",
                                   maxHeight: "1.2em",
@@ -880,7 +880,7 @@ function Gen9() {
                               </Typography>
                               <Typography
                                 sx={{
-                                  fontSize: 20,
+                                  fontSize: 15,
                                   textAlign: "center",
                                   lineHeight: "1.2",
                                   maxHeight: "1.2em",
@@ -967,7 +967,7 @@ function Gen9() {
                                 </Typography>
                                 <Typography
                                   sx={{
-                                    fontSize: 20,
+                                    fontSize: 15,
                                     textAlign: "center",
                                     lineHeight: "1.2",
                                     maxHeight: "1.2em",
