@@ -8,10 +8,13 @@ import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import MenuItem from "@mui/material/MenuItem";
+import Avatar from "@mui/material/Avatar";
+import Tooltip from "@mui/material/Tooltip";
 import { Link } from "react-router-dom";
 
 function TopBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -19,6 +22,14 @@ function TopBar() {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+  };
+
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
   };
 
   return (
@@ -37,7 +48,6 @@ function TopBar() {
               sx={{
                 mr: 2,
                 display: { xs: "none", md: "flex" },
-                fontFamily: "monospace",
                 fontWeight: 700,
                 letterSpacing: ".3rem",
                 color: "red",
@@ -104,20 +114,6 @@ function TopBar() {
                     Paldean-Dex
                   </Typography>
                 </MenuItem>
-                <MenuItem>
-                  <Typography
-                    component={Link}
-                    to="/add"
-                    textAlign="center"
-                    sx={{
-                      fontWeight: 700,
-                      color: "inherit",
-                      textDecoration: "none",
-                    }}
-                  >
-                    Add Pokemon
-                  </Typography>
-                </MenuItem>
               </Menu>
             </Box>
             <Typography
@@ -129,7 +125,6 @@ function TopBar() {
                 mr: 2,
                 display: { xs: "flex", md: "none" },
                 flexGrow: 1,
-                fontFamily: "monospace",
                 fontWeight: 700,
                 letterSpacing: ".3rem",
                 textDecoration: "none",
@@ -171,22 +166,55 @@ function TopBar() {
               >
                 Paldean-Dex
               </Typography>
+            </Box>
+            <Box sx={{ flexGrow: 0, display: "flex" }}>
               <Typography
-                variant="h6"
                 noWrap
-                component={Link}
-                to="/add"
                 sx={{
-                  mr: 4,
-                  ml: 4,
-                  display: { xs: "none", md: "flex" },
-                  fontWeight: 700,
+                  mr: 2,
+                  mt: 1,
+                  fontSize: 15,
                   color: "inherit",
-                  textDecoration: "none",
                 }}
               >
-                Add Pokemon
+                v2.0
               </Typography>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/1026px-Pok%C3%A9_Ball_icon.svg.png" />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography
+                    component={Link}
+                    to="/add"
+                    sx={{
+                      fontWeight: 700,
+                      color: "inherit",
+                      textDecoration: "none",
+                      width: "100%",
+                    }}
+                  >
+                    Add Pokémon
+                  </Typography>
+                </MenuItem>
+              </Menu>
             </Box>
           </Toolbar>
         </Container>
