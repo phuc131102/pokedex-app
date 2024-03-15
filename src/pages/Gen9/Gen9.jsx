@@ -711,7 +711,7 @@ function Gen9() {
           {selectedCard.lv1 || selectedCard.lv2 || selectedCard.lv3 ? (
             <>
               <Typography id="place-book-modal" variant="h6" textAlign="center">
-                <b>Evoluation</b>
+                <b>Tiến hóa</b>
               </Typography>
 
               <TableContainer
