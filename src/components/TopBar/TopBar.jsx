@@ -87,7 +87,7 @@ function TopBar() {
                       textDecoration: "none",
                     }}
                   >
-                    Newest
+                    Debut
                   </Typography>
                 </MenuItem>
                 <MenuItem onClick={handleCloseNavMenu}>
@@ -101,7 +101,7 @@ function TopBar() {
                       textDecoration: "none",
                     }}
                   >
-                    Gen 9
+                    Paldean-Dex
                   </Typography>
                 </MenuItem>
                 <MenuItem>
@@ -153,7 +153,7 @@ function TopBar() {
                   textDecoration: "none",
                 }}
               >
-                Newest
+                Debut
               </Typography>
               <Typography
                 variant="h6"
@@ -169,7 +169,7 @@ function TopBar() {
                   textDecoration: "none",
                 }}
               >
-                Gen 9
+                Paldean-Dex
               </Typography>
               <Typography
                 variant="h6"

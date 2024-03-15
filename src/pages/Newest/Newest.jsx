@@ -794,6 +794,22 @@ function Gen9() {
                               >
                                 <b>{lv1.name}</b>
                               </Typography>
+                              <Typography
+                                sx={{
+                                  fontSize: 20,
+                                  textAlign: "center",
+                                  lineHeight: "1.2",
+                                  maxHeight: "1.2em",
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis",
+                                  whiteSpace: "nowrap",
+                                  display: "block",
+                                }}
+                                color="text.primary"
+                                gutterBottom
+                              >
+                                <b>#{lv1.num}</b>
+                              </Typography>
 
                               <div
                                 style={{
@@ -862,6 +878,22 @@ function Gen9() {
                                 gutterBottom
                               >
                                 <b>{lv2.name}</b>
+                              </Typography>
+                              <Typography
+                                sx={{
+                                  fontSize: 20,
+                                  textAlign: "center",
+                                  lineHeight: "1.2",
+                                  maxHeight: "1.2em",
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis",
+                                  whiteSpace: "nowrap",
+                                  display: "block",
+                                }}
+                                color="text.primary"
+                                gutterBottom
+                              >
+                                <b>#{lv2.num}</b>
                               </Typography>
 
                               <div
@@ -933,6 +965,22 @@ function Gen9() {
                                   gutterBottom
                                 >
                                   <b>{lv3.name}</b>
+                                </Typography>
+                                <Typography
+                                  sx={{
+                                    fontSize: 20,
+                                    textAlign: "center",
+                                    lineHeight: "1.2",
+                                    maxHeight: "1.2em",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                    whiteSpace: "nowrap",
+                                    display: "block",
+                                  }}
+                                  color="text.primary"
+                                  gutterBottom
+                                >
+                                  <b>#{lv3.num}</b>
                                 </Typography>
 
                                 <div
