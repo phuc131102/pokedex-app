@@ -177,7 +177,7 @@ function TopBar() {
                   color: "inherit",
                 }}
               >
-                v2.0
+                v2.1
               </Typography>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

@@ -309,7 +309,15 @@ function Gen9() {
             <b>#{selectedCard.num}</b>
           </Typography>
           <Typography id="place-book-modal" variant="h4" textAlign="center">
-            <b>{selectedCard.name}</b>
+            {selectedCard.jpname ? (
+              <>
+                <sup style={{ fontSize: "10px" }}>Eng </sup>
+                <b>{selectedCard.name}</b> - <b>{selectedCard.jpname}</b>
+                <sup style={{ fontSize: "10px" }}> Jpn</sup>
+              </>
+            ) : (
+              <b>{selectedCard.name}</b>
+            )}
           </Typography>
           {selectedCard.form1 !== "" ? (
             <Typography id="place-book-modal" variant="h6" textAlign="center">
