@@ -2,10 +2,11 @@ import React, { useEffect } from "react";
 
 import "./App.css";
 import { BrowserRouter as Router } from "react-router-dom";
+import ScrollToTop from "react-scroll-to-top";
 
 import AppRoutes from "./routes/Routes";
 import TopBar from "./components/TopBar/TopBar";
-import ScrollToTop from "./components/toTop/toTop";
+import ToTop from "./components/toTop/toTop";
 
 function App() {
   useEffect(() => {
@@ -15,9 +16,10 @@ function App() {
   return (
     <div className="app-wrapper">
       <Router>
-        <ScrollToTop />
+        <ToTop />
         <TopBar />
         <AppRoutes />
+        <ScrollToTop smooth />
       </Router>
     </div>
   );

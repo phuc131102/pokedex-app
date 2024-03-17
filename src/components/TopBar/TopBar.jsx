@@ -86,10 +86,8 @@ function TopBar() {
                   display: { xs: "block", md: "none" },
                 }}
               >
-                <MenuItem onClick={handleCloseNavMenu}>
+                <MenuItem onClick={handleCloseNavMenu} component={Link} to="/">
                   <Typography
-                    component={Link}
-                    to="/"
                     textAlign="center"
                     sx={{
                       fontWeight: 700,
@@ -100,10 +98,12 @@ function TopBar() {
                     Debut
                   </Typography>
                 </MenuItem>
-                <MenuItem onClick={handleCloseNavMenu}>
+                <MenuItem
+                  onClick={handleCloseNavMenu}
+                  component={Link}
+                  to="/gen9"
+                >
                   <Typography
-                    component={Link}
-                    to="/gen9"
                     textAlign="center"
                     sx={{
                       fontWeight: 700,
@@ -177,7 +177,7 @@ function TopBar() {
                   color: "inherit",
                 }}
               >
-                v2.1
+                v2.1.1
               </Typography>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -200,10 +200,12 @@ function TopBar() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                <MenuItem onClick={handleCloseUserMenu}>
+                <MenuItem
+                  onClick={handleCloseUserMenu}
+                  component={Link}
+                  to="/add"
+                >
                   <Typography
-                    component={Link}
-                    to="/add"
                     sx={{
                       fontWeight: 700,
                       color: "inherit",

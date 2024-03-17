@@ -204,6 +204,7 @@ function Gen9() {
             {gen9
               .slice()
               .reverse()
+              .slice(0, 30)
               .map((card, index) => (
                 <Grid item xs={6} sm={3} md={2} key={index}>
                   <Card
@@ -310,7 +311,15 @@ function Gen9() {
             <b>#{selectedCard.num}</b>
           </Typography>
           <Typography id="place-book-modal" variant="h4" textAlign="center">
-            <b>{selectedCard.name}</b>
+            {selectedCard.jpname ? (
+              <>
+                <sup style={{ fontSize: "10px" }}>Eng </sup>
+                <b>{selectedCard.name}</b> - <b>{selectedCard.jpname}</b>
+                <sup style={{ fontSize: "10px" }}> Jpn</sup>
+              </>
+            ) : (
+              <b>{selectedCard.name}</b>
+            )}
           </Typography>
           {selectedCard.form1 !== "" ? (
             <Typography id="place-book-modal" variant="h6" textAlign="center">
@@ -538,6 +547,19 @@ function Gen9() {
             }}
           ></div>
 
+          {selectedCard.form2 !== "" || selectedCard.form3 !== "" ? (
+            <Typography
+              id="place-book-modal"
+              variant="h6"
+              textAlign="center"
+              sx={{
+                marginBottom: "15px",
+              }}
+            >
+              <b>Dạng khác</b>
+            </Typography>
+          ) : null}
+
           {selectedCard.form2 !== "" ? (
             <Card
               sx={{
@@ -712,7 +734,7 @@ function Gen9() {
           {selectedCard.lv1 || selectedCard.lv2 || selectedCard.lv3 ? (
             <>
               <Typography id="place-book-modal" variant="h6" textAlign="center">
-                <b>Tiến hóa</b>
+                <b>Chuỗi tiến hóa</b>
               </Typography>
 
               <TableContainer

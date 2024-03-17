@@ -545,6 +545,19 @@ function Gen9() {
             }}
           ></div>
 
+          {selectedCard.form2 !== "" || selectedCard.form3 !== "" ? (
+            <Typography
+              id="place-book-modal"
+              variant="h6"
+              textAlign="center"
+              sx={{
+                marginBottom: "15px",
+              }}
+            >
+              <b>Dạng khác</b>
+            </Typography>
+          ) : null}
+
           {selectedCard.form2 !== "" ? (
             <Card
               sx={{
@@ -719,7 +732,7 @@ function Gen9() {
           {selectedCard.lv1 || selectedCard.lv2 || selectedCard.lv3 ? (
             <>
               <Typography id="place-book-modal" variant="h6" textAlign="center">
-                <b>Tiến hóa</b>
+                <b>Chuỗi tiến hóa</b>
               </Typography>
 
               <TableContainer
