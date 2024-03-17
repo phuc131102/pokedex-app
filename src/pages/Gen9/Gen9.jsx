@@ -32,6 +32,7 @@ function Gen9() {
   const [form2, setForm2] = useState("");
   const [lv1, setLv1] = useState("");
   const [lv2, setLv2] = useState("");
+  const [lv2Form2, setLv2Form2] = useState("");
   const [lv3, setLv3] = useState("");
   const [ability, setAbility] = useState([]);
   const { gen9, loadingGen9 } = useGen9();
@@ -79,6 +80,7 @@ function Gen9() {
     if (cardInfo.lv3) {
       findLv3(cardInfo.lv3);
     }
+
     if (modalContentRef.current) {
       modalContentRef.current.scrollTop = 0;
     }
@@ -129,6 +131,18 @@ function Gen9() {
     const abilityCard = gen9.find((gen9) => gen9.name === lv2);
     if (abilityCard) {
       setLv2(abilityCard);
+      if (abilityCard.form2 !== "") {
+        findLv2Form2(abilityCard.name, abilityCard.form2);
+      }
+    } else return null;
+  };
+
+  const findLv2Form2 = (name, form2) => {
+    const abilityCard = gen9.find(
+      (gen9) => gen9.name === name && gen9.form1 === form2
+    );
+    if (abilityCard) {
+      setLv2Form2(abilityCard);
     } else return null;
   };
 
@@ -983,6 +997,88 @@ function Gen9() {
                             </CardContent>
                           </CardActionArea>
                         </Card>
+                        {lv2.form2 !== "" ? (
+                          <Card
+                            sx={{
+                              backgroundColor: "white",
+                              borderRadius: "20px",
+                              boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
+                              width: "100%",
+                              margin: "auto",
+                              marginTop: "15px",
+                            }}
+                          >
+                            <CardActionArea
+                              onClick={() => handleOpenModal(lv2Form2)}
+                            >
+                              <CardMedia
+                                component="img"
+                                sx={{ width: 100, margin: "auto" }}
+                                image={lv2Form2.icon}
+                                alt={lv2Form2.name}
+                              />
+                              <CardContent>
+                                <Typography
+                                  sx={{
+                                    fontSize: 20,
+                                    textAlign: "center",
+                                    lineHeight: "1.2",
+                                    maxHeight: "1.2em",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                    whiteSpace: "nowrap",
+                                    display: "block",
+                                  }}
+                                  color="text.primary"
+                                  gutterBottom
+                                >
+                                  <b>{lv2Form2.name}</b>
+                                </Typography>
+                                <Typography
+                                  sx={{
+                                    fontSize: 15,
+                                    textAlign: "center",
+                                    lineHeight: "1.2",
+                                    maxHeight: "1.2em",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                    whiteSpace: "nowrap",
+                                    display: "block",
+                                  }}
+                                  color="text.primary"
+                                  gutterBottom
+                                >
+                                  <b>#{lv2Form2.num}</b>
+                                </Typography>
+
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                  }}
+                                >
+                                  <img
+                                    src={getImageSource(lv2Form2.type1)}
+                                    alt="Grass"
+                                    width={"15%"}
+                                    style={{
+                                      marginRight:
+                                        lv2Form2.type2 !== "" ? "10px" : null,
+                                    }}
+                                  />
+                                  {lv2Form2.type2 !== "" ? (
+                                    <img
+                                      src={getImageSource(lv2Form2.type2)}
+                                      alt="Grass"
+                                      width={"15%"}
+                                    />
+                                  ) : null}
+                                </div>
+                              </CardContent>
+                            </CardActionArea>
+                          </Card>
+                        ) : null}
                       </TableCell>
                       {selectedCard.lv3 ? (
                         <TableCell
