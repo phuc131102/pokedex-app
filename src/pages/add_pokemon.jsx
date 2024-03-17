@@ -96,6 +96,7 @@ function Signup() {
     form2: "",
     form3: "",
     name: "",
+    jpname: "",
     info_en: "",
     image: "",
     icon: "",
@@ -196,7 +197,7 @@ function Signup() {
                       </Box>
                     </Grid>
                     <Grid container spacing={2}>
-                      <Grid item xs={4}>
+                      <Grid item xs={3}>
                         <TextField
                           id="outlined-basic"
                           sx={{
@@ -212,7 +213,7 @@ function Signup() {
                           onChange={handleChange}
                         />
                       </Grid>
-                      <Grid item xs={8}>
+                      <Grid item xs={4.5}>
                         <TextField
                           id="outlined-basic"
                           sx={{
@@ -225,6 +226,22 @@ function Signup() {
                           label="Name"
                           name="name"
                           value={formData.name}
+                          onChange={handleChange}
+                        />
+                      </Grid>
+                      <Grid item xs={4.5}>
+                        <TextField
+                          id="outlined-basic"
+                          sx={{
+                            width: "100%",
+                            [`& fieldset`]: { borderRadius: 8 },
+                            marginTop: "30px",
+                            marginBottom: "15px",
+                          }}
+                          variant="outlined"
+                          label="Japanese Name"
+                          name="jpname"
+                          value={formData.jpname}
                           onChange={handleChange}
                         />
                       </Grid>
