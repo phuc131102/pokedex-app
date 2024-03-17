@@ -15,6 +15,7 @@ import {
   TableHead,
   TableRow,
   Paper,
+  Pagination,
 } from "@mui/material";
 import useGen9 from "../../utils/gen9Utils";
 import { allAbility } from "../../services/pokeAPI";
@@ -35,6 +36,8 @@ function Gen9() {
   const [ability, setAbility] = useState([]);
   const { gen9, loadingGen9 } = useGen9();
   const modalContentRef = useRef(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 30;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,6 +50,16 @@ function Gen9() {
     };
     fetchData();
   }, []);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentGen9 = gen9
+    .sort((a, b) => a.num - b.num)
+    .slice(indexOfFirstItem, indexOfLastItem);
+
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
+  };
 
   const handleOpenModal = (cardInfo) => {
     setSelectedCard(cardInfo);
@@ -186,10 +199,24 @@ function Gen9() {
           width: "20%",
           margin: "10px auto",
           marginTop: "75px",
-          marginBottom: "30px",
         }}
       ></div>
-
+      <Pagination
+        count={Math.ceil(gen9.length / itemsPerPage)}
+        page={currentPage}
+        onChange={handlePageChange}
+        shape="rounded"
+        size="large"
+        color="primary"
+        showFirstButton
+        showLastButton
+        sx={{
+          marginTop: "20px",
+          marginBottom: "20px",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      />
       <Card
         sx={{
           backgroundColor: "white",
@@ -201,95 +228,108 @@ function Gen9() {
       >
         <CardContent>
           <Grid container spacing={5}>
-            {gen9
-              .sort((a, b) => a.num - b.num)
-              .map((card, index) => (
-                <Grid item xs={6} sm={3} md={2} key={index}>
-                  <Card
-                    sx={{
-                      backgroundColor: "white",
-                      borderRadius: "20px",
-                      boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
-                    }}
-                  >
-                    <CardActionArea onClick={() => handleOpenModal(card)}>
-                      <CardMedia
-                        component="img"
-                        sx={{ width: 100, margin: "auto" }}
-                        image={card.icon}
-                        alt={card.name}
-                      />
-                      <CardContent>
-                        <Typography
-                          sx={{
-                            fontSize: 15,
-                            textAlign: "center",
-                            lineHeight: "1.2",
-                            maxHeight: "1.2em",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                            whiteSpace: "nowrap",
-                            display: "block",
-                          }}
-                          color="text.primary"
-                          gutterBottom
-                        >
-                          <b>#{card.num}</b>
-                        </Typography>
-                        <Typography
-                          sx={{
-                            fontSize: 20,
-                            textAlign: "center",
-                            lineHeight: "1.2",
-                            maxHeight: "1.2em",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                            whiteSpace: "nowrap",
-                            display: "block",
-                          }}
-                          color="text.primary"
-                          gutterBottom
-                        >
-                          <b>{card.name}</b>
-                        </Typography>
+            {currentGen9.map((card, index) => (
+              <Grid item xs={6} sm={3} md={2} key={index}>
+                <Card
+                  sx={{
+                    backgroundColor: "white",
+                    borderRadius: "20px",
+                    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
+                  }}
+                >
+                  <CardActionArea onClick={() => handleOpenModal(card)}>
+                    <CardMedia
+                      component="img"
+                      sx={{ width: 100, margin: "auto" }}
+                      image={card.icon}
+                      alt={card.name}
+                    />
+                    <CardContent>
+                      <Typography
+                        sx={{
+                          fontSize: 15,
+                          textAlign: "center",
+                          lineHeight: "1.2",
+                          maxHeight: "1.2em",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                          display: "block",
+                        }}
+                        color="text.primary"
+                        gutterBottom
+                      >
+                        <b>#{card.num}</b>
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontSize: 20,
+                          textAlign: "center",
+                          lineHeight: "1.2",
+                          maxHeight: "1.2em",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                          display: "block",
+                        }}
+                        color="text.primary"
+                        gutterBottom
+                      >
+                        <b>{card.name}</b>
+                      </Typography>
 
-                        <div
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <img
+                          src={getImageSource(card.type1)}
+                          alt="card.type1"
+                          width={"15%"}
                           style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
+                            marginRight: card.type2 !== "" ? "10px" : null,
                           }}
-                        >
+                        />
+                        {card.type2 !== "" ? (
                           <img
-                            src={getImageSource(card.type1)}
-                            alt="card.type1"
+                            src={getImageSource(card.type2)}
+                            alt={card.type1}
                             width={"15%"}
-                            style={{
-                              marginRight: card.type2 !== "" ? "10px" : null,
-                            }}
                           />
-                          {card.type2 !== "" ? (
-                            <img
-                              src={getImageSource(card.type2)}
-                              alt={card.type1}
-                              width={"15%"}
-                            />
-                          ) : null}
-                        </div>
-                      </CardContent>
-                    </CardActionArea>
-                  </Card>
-                </Grid>
-              ))}
+                        ) : null}
+                      </div>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Grid>
+            ))}
           </Grid>
         </CardContent>
       </Card>
+      <Pagination
+        count={Math.ceil(gen9.length / itemsPerPage)}
+        page={currentPage}
+        onChange={handlePageChange}
+        shape="rounded"
+        size="large"
+        color="primary"
+        showFirstButton
+        showLastButton
+        sx={{
+          marginTop: "20px",
+          marginBottom: "20px",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      />
       <div
         style={{
           borderTop: "2px solid black",
           width: "20%",
           margin: "10px auto",
-          marginTop: "30px",
           marginBottom: "30px",
         }}
       ></div>
