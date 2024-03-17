@@ -228,6 +228,22 @@ function Gen9() {
                     }}
                   >
                     <CardActionArea onClick={() => handleOpenModal(card)}>
+                      {card.new ? (
+                        <div
+                          style={{
+                            position: "absolute",
+                            top: "10px",
+                            right: "10px",
+                            backgroundColor: "red",
+                            color: "white",
+                            padding: "4px 8px",
+                            borderRadius: "10px",
+                            fontSize: "12px",
+                          }}
+                        >
+                          New
+                        </div>
+                      ) : null}
                       <CardMedia
                         component="img"
                         sx={{ width: 100, margin: "auto" }}
