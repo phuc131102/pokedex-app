@@ -23,6 +23,9 @@ import { allAbility } from "../../services/pokeAPI";
 import Loading from "../../components/Loading/Loading";
 import getImageSource from "../../components/Type/Type";
 import getImageSourceFull from "../../components/Type/Type_full";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function Gen9() {
   const [showModal, setShowModal] = useState(false);
@@ -41,8 +44,23 @@ function Gen9() {
   const [ability, setAbility] = useState([]);
   const { gen9, loadingGen9 } = useGen9();
   const modalContentRef = useRef(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 30;
+  // const [currentPage, setCurrentPage] = useState(1);
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.up("md"));
+  const itemsPerPage = isMd ? 30 : 10;
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // Function to get query parameter value
+  const getQueryParams = (param) => {
+    return new URLSearchParams(location.search).get(param);
+  };
+
+  // Get the current page from the URL, default to 1 if not present
+  const [currentPage, setCurrentPage] = useState(
+    parseInt(getQueryParams("page")) || 1
+  );
 
   const types = [
     "Normal",
@@ -97,6 +115,7 @@ function Gen9() {
 
   const handlePageChange = (event, value) => {
     setCurrentPage(value);
+    navigate(`?page=${value}`);
   };
 
   const handleOpenModal = (cardInfo) => {
@@ -192,16 +211,28 @@ function Gen9() {
 
   const handleTypeChange1 = (event) => {
     setSelectedType1(event.target.value);
+    setCurrentPage(1);
+    navigate(`?page=1`);
   };
 
   const handleTypeChange2 = (event) => {
     setSelectedType2(event.target.value);
+    setCurrentPage(1);
+    navigate(`?page=1`);
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+    setCurrentPage(1);
+    navigate(`?page=1`);
   };
 
   const handleResetFilters = () => {
     setSearchQuery("");
     setSelectedType1("");
     setSelectedType2("");
+    setCurrentPage(1);
+    navigate(`?page=1`);
   };
 
   const styles = {
@@ -272,110 +303,210 @@ function Gen9() {
       >
         <CardContent>
           <Grid container spacing={5}>
-            {gen9
-              .slice()
-              .reverse()
-              .slice(0, 6)
-              .map((card, index) => (
-                <Grid item xs={6} sm={3} md={2} key={index}>
-                  <Card
-                    sx={{
-                      backgroundColor: "white",
-                      borderRadius: "20px",
-                      boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
-                    }}
-                  >
-                    <CardActionArea onClick={() => handleOpenModal(card)}>
-                      {card.new ? (
-                        <div
-                          style={{
-                            position: "absolute",
-                            top: "10px",
-                            right: "10px",
-                            backgroundColor: "red",
-                            color: "white",
-                            padding: "4px 8px",
-                            borderRadius: "10px",
-                            fontSize: "12px",
-                          }}
-                        >
-                          New
-                        </div>
-                      ) : null}
-                      <CardMedia
-                        component="img"
-                        sx={{ width: 100, margin: "auto" }}
-                        image={card.icon}
-                        alt={card.name}
-                      />
-                      <CardContent>
-                        <Typography
-                          sx={{
-                            fontSize: 15,
-                            textAlign: "center",
-                            lineHeight: "1.2",
-                            maxHeight: "1.2em",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                            whiteSpace: "nowrap",
-                            display: "block",
-                          }}
-                          color="text.primary"
-                          gutterBottom
-                        >
-                          <b>#{card.num}</b>
-                        </Typography>
-                        <Typography
-                          sx={{
-                            fontSize: 20,
-                            textAlign: "center",
-                            lineHeight: "1.2",
-                            maxHeight: "1.2em",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                            whiteSpace: "nowrap",
-                            display: "block",
-                          }}
-                          color="text.primary"
-                          gutterBottom
-                        >
-                          <b>{card.name}</b>
-                        </Typography>
-
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                          }}
-                        >
-                          <img
-                            src={getImageSource(card.type1)}
-                            alt="card.type1"
-                            width={"15%"}
-                            style={{
-                              marginRight: card.type2 !== "" ? "10px" : null,
-                            }}
-                          />
-                          {card.type2 !== "" ? (
-                            <img
-                              src={getImageSource(card.type2)}
-                              alt={card.type1}
-                              width={"15%"}
-                            />
+            {isMd
+              ? gen9
+                  .slice()
+                  .reverse()
+                  .slice(0, 6)
+                  .map((card, index) => (
+                    <Grid item xs={6} sm={3} md={2} key={index}>
+                      <Card
+                        sx={{
+                          backgroundColor: "white",
+                          borderRadius: "20px",
+                          boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
+                        }}
+                      >
+                        <CardActionArea onClick={() => handleOpenModal(card)}>
+                          {card.new ? (
+                            <div
+                              style={{
+                                position: "absolute",
+                                top: "10px",
+                                right: "10px",
+                                backgroundColor: "red",
+                                color: "white",
+                                padding: "4px 8px",
+                                borderRadius: "10px",
+                                fontSize: "12px",
+                              }}
+                            >
+                              New
+                            </div>
                           ) : null}
-                        </div>
-                      </CardContent>
-                    </CardActionArea>
-                  </Card>
-                </Grid>
-              ))}
+                          <CardMedia
+                            component="img"
+                            sx={{ width: 100, margin: "auto" }}
+                            image={card.icon}
+                            alt={card.name}
+                          />
+                          <CardContent>
+                            <Typography
+                              sx={{
+                                fontSize: 15,
+                                textAlign: "center",
+                                lineHeight: "1.2",
+                                maxHeight: "1.2em",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                whiteSpace: "nowrap",
+                                display: "block",
+                              }}
+                              color="text.primary"
+                              gutterBottom
+                            >
+                              <b>#{card.num}</b>
+                            </Typography>
+                            <Typography
+                              sx={{
+                                fontSize: 20,
+                                textAlign: "center",
+                                lineHeight: "1.2",
+                                maxHeight: "1.2em",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                whiteSpace: "nowrap",
+                                display: "block",
+                              }}
+                              color="text.primary"
+                              gutterBottom
+                            >
+                              <b>{card.name}</b>
+                            </Typography>
+
+                            <div
+                              style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                              }}
+                            >
+                              <img
+                                src={getImageSource(card.type1)}
+                                alt="card.type1"
+                                width={"15%"}
+                                style={{
+                                  marginRight:
+                                    card.type2 !== "" ? "10px" : null,
+                                }}
+                              />
+                              {card.type2 !== "" ? (
+                                <img
+                                  src={getImageSource(card.type2)}
+                                  alt={card.type1}
+                                  width={"15%"}
+                                />
+                              ) : null}
+                            </div>
+                          </CardContent>
+                        </CardActionArea>
+                      </Card>
+                    </Grid>
+                  ))
+              : gen9
+                  .slice()
+                  .reverse()
+                  .slice(0, 2)
+                  .map((card, index) => (
+                    <Grid item xs={6} sm={3} md={2} key={index}>
+                      <Card
+                        sx={{
+                          backgroundColor: "white",
+                          borderRadius: "20px",
+                          boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
+                        }}
+                      >
+                        <CardActionArea onClick={() => handleOpenModal(card)}>
+                          {card.new ? (
+                            <div
+                              style={{
+                                position: "absolute",
+                                top: "10px",
+                                right: "10px",
+                                backgroundColor: "red",
+                                color: "white",
+                                padding: "4px 8px",
+                                borderRadius: "10px",
+                                fontSize: "12px",
+                              }}
+                            >
+                              New
+                            </div>
+                          ) : null}
+                          <CardMedia
+                            component="img"
+                            sx={{ width: 100, margin: "auto" }}
+                            image={card.icon}
+                            alt={card.name}
+                          />
+                          <CardContent>
+                            <Typography
+                              sx={{
+                                fontSize: 15,
+                                textAlign: "center",
+                                lineHeight: "1.2",
+                                maxHeight: "1.2em",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                whiteSpace: "nowrap",
+                                display: "block",
+                              }}
+                              color="text.primary"
+                              gutterBottom
+                            >
+                              <b>#{card.num}</b>
+                            </Typography>
+                            <Typography
+                              sx={{
+                                fontSize: 20,
+                                textAlign: "center",
+                                lineHeight: "1.2",
+                                maxHeight: "1.2em",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                whiteSpace: "nowrap",
+                                display: "block",
+                              }}
+                              color="text.primary"
+                              gutterBottom
+                            >
+                              <b>{card.name}</b>
+                            </Typography>
+
+                            <div
+                              style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                              }}
+                            >
+                              <img
+                                src={getImageSource(card.type1)}
+                                alt="card.type1"
+                                width={"25%"}
+                                style={{
+                                  marginRight:
+                                    card.type2 !== "" ? "10px" : null,
+                                }}
+                              />
+                              {card.type2 !== "" ? (
+                                <img
+                                  src={getImageSource(card.type2)}
+                                  alt={card.type1}
+                                  width={"25%"}
+                                />
+                              ) : null}
+                            </div>
+                          </CardContent>
+                        </CardActionArea>
+                      </Card>
+                    </Grid>
+                  ))}
           </Grid>
         </CardContent>
       </Box>
       <div
         style={{
-          // borderTop: "2px solid black",
           width: "20%",
           margin: "10px auto",
           marginTop: "15px",
@@ -386,30 +517,53 @@ function Gen9() {
           type="text"
           placeholder="Search Pokémon"
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          style={{
-            padding: "10px",
-            borderRadius: "5px",
-            width: "15%",
-            // maxWidth: "400px",
-            border: "1px solid #ccc",
-            fontSize: "1.2rem",
-            marginRight: "10px",
-          }}
+          onChange={handleSearchChange}
+          style={
+            isMd
+              ? {
+                  padding: "10px",
+                  borderRadius: "5px",
+                  width: "15%",
+                  border: "1px solid #ccc",
+                  fontSize: "1.2rem",
+                  marginRight: "10px",
+                }
+              : {
+                  padding: "10px",
+                  borderRadius: "5px",
+                  width: "80%",
+                  border: "1px solid #ccc",
+                  fontSize: "1.0rem",
+                  display: "block",
+                  marginBottom: "10px",
+                  margin: "auto",
+                }
+          }
         />
         <select
           value={selectedType1}
           onChange={handleTypeChange1}
-          style={{
-            padding: "10px",
-            borderRadius: "5px",
-            width: "10%",
-            // maxWidth: "400px",
-            border: "1px solid #ccc",
-            fontSize: "1.2rem",
-            marginTop: "10px",
-            marginRight: "10px",
-          }}
+          style={
+            isMd
+              ? {
+                  padding: "10px",
+                  borderRadius: "5px",
+                  width: "10%",
+                  border: "1px solid #ccc",
+                  fontSize: "1.2rem",
+                  marginTop: "10px",
+                  marginRight: "10px",
+                }
+              : {
+                  padding: "10px",
+                  borderRadius: "5px",
+                  width: "35%",
+                  border: "1px solid #ccc",
+                  fontSize: "1.0rem",
+                  marginTop: "10px",
+                  marginRight: "10px",
+                }
+          }
         >
           <option value="">Filter Type 1</option>
           {types.map((type) => (
@@ -421,16 +575,27 @@ function Gen9() {
         <select
           value={selectedType2}
           onChange={handleTypeChange2}
-          style={{
-            padding: "10px",
-            borderRadius: "5px",
-            width: "10%",
-            // maxWidth: "400px",
-            border: "1px solid #ccc",
-            fontSize: "1.2rem",
-            marginTop: "10px",
-            marginRight: "10px",
-          }}
+          style={
+            isMd
+              ? {
+                  padding: "10px",
+                  borderRadius: "5px",
+                  width: "10%",
+                  border: "1px solid #ccc",
+                  fontSize: "1.2rem",
+                  marginTop: "10px",
+                  marginRight: "10px",
+                }
+              : {
+                  padding: "10px",
+                  borderRadius: "5px",
+                  width: "35%",
+                  border: "1px solid #ccc",
+                  fontSize: "1.0rem",
+                  marginTop: "10px",
+                  marginRight: "10px",
+                }
+          }
         >
           <option value="">Filter Type 2</option>
           {types.map((type) => (
@@ -439,18 +604,31 @@ function Gen9() {
             </option>
           ))}
         </select>
-        <Button onClick={handleResetFilters} variant="contained">
+        <Button
+          sx={
+            !isMd
+              ? {
+                  width: "20%",
+                  display: "block",
+                  margin: "auto",
+                  marginTop: "10px",
+                }
+              : null
+          }
+          onClick={handleResetFilters}
+          variant="contained"
+        >
           Reset
         </Button>
       </div>
 
-      {filteredGen9.length > 30 && (
+      {filteredGen9.length > itemsPerPage && (
         <Pagination
           count={Math.ceil(filteredGen9.length / itemsPerPage)}
           page={currentPage}
           onChange={handlePageChange}
           shape="rounded"
-          size="large"
+          size={isMd ? "large" : "small"}
           color="primary"
           showFirstButton
           showLastButton
@@ -535,7 +713,7 @@ function Gen9() {
                           <img
                             src={getImageSource(card.type1)}
                             alt="card.type1"
-                            width={"15%"}
+                            width={isMd ? "15%" : "25%"}
                             style={{
                               marginRight: card.type2 !== "" ? "10px" : null,
                             }}
@@ -544,7 +722,7 @@ function Gen9() {
                             <img
                               src={getImageSource(card.type2)}
                               alt={card.type1}
-                              width={"15%"}
+                              width={isMd ? "15%" : "25%"}
                             />
                           ) : null}
                         </div>
@@ -557,13 +735,13 @@ function Gen9() {
           )}
         </CardContent>
       </Box>
-      {filteredGen9.length > 30 && (
+      {filteredGen9.length > itemsPerPage && (
         <Pagination
           count={Math.ceil(filteredGen9.length / itemsPerPage)}
           page={currentPage}
           onChange={handlePageChange}
           shape="rounded"
-          size="large"
+          size={isMd ? "large" : "small"}
           color="primary"
           showFirstButton
           showLastButton

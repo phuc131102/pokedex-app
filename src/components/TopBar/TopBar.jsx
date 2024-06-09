@@ -49,12 +49,15 @@ function TopBar() {
                 mr: 2,
                 display: { xs: "none", md: "flex" },
                 fontWeight: 700,
-                letterSpacing: ".3rem",
-                color: "red",
                 textDecoration: "none",
+                color: "yellow",
+                backgroundColor: "green",
+                textAlign: "center",
+                borderRadius: "10px",
+                padding: "5px",
               }}
             >
-              Pokédex
+              Horizon-Dex
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -107,15 +110,18 @@ function TopBar() {
               to="/"
               sx={{
                 mr: 2,
-                display: { xs: "flex", md: "none" },
+                display: { md: "none" },
                 flexGrow: 1,
                 fontWeight: 700,
-                letterSpacing: ".3rem",
+                // letterSpacing: ".3rem",
                 textDecoration: "none",
-                color: "red",
+                color: "yellow",
+                backgroundColor: "green",
+                textAlign: "center",
+                borderRadius: "10px",
               }}
             >
-              Pokédex
+              Horizon-Dex
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               <Typography
@@ -145,7 +151,7 @@ function TopBar() {
                   color: "inherit",
                 }}
               >
-                v2.2.0
+                v2.2.2
               </Typography>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
