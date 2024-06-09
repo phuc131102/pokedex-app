@@ -215,7 +215,6 @@ function Gen9() {
         <CardContent>
           <Grid container spacing={5}>
             {gen9
-              .slice()
               .reverse()
               .slice(0, 30)
               .map((card, index) => (

@@ -16,6 +16,7 @@ import {
   TableRow,
   Paper,
   Pagination,
+  Button,
 } from "@mui/material";
 import useGen9 from "../../utils/gen9Utils";
 import { allAbility } from "../../services/pokeAPI";
@@ -28,6 +29,9 @@ function Gen9() {
   const [showNestedModal, setShowNestedModal] = useState(false);
   const [selectedCard, setSelectedCard] = useState("");
   const [abilityInfo, setAbilityInfo] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedType1, setSelectedType1] = useState("");
+  const [selectedType2, setSelectedType2] = useState("");
   const [form, setForm] = useState("");
   const [form2, setForm2] = useState("");
   const [lv1, setLv1] = useState("");
@@ -39,6 +43,27 @@ function Gen9() {
   const modalContentRef = useRef(null);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 30;
+
+  const types = [
+    "Normal",
+    "Fire",
+    "Water",
+    "Electric",
+    "Grass",
+    "Ice",
+    "Fighting",
+    "Poison",
+    "Ground",
+    "Flying",
+    "Psychic",
+    "Bug",
+    "Rock",
+    "Ghost",
+    "Dragon",
+    "Dark",
+    "Steel",
+    "Fairy",
+  ];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,7 +79,19 @@ function Gen9() {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentGen9 = gen9
+
+  const filteredGen9 = gen9.filter((pokemon) => {
+    const matchesSearchQuery = pokemon.name
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+    const matchesType1 =
+      selectedType1 === "" || pokemon.type1 === selectedType1;
+    const matchesType2 =
+      selectedType2 === "" || pokemon.type2 === selectedType2;
+    return matchesSearchQuery && matchesType1 && matchesType2;
+  });
+
+  const currentGen9 = filteredGen9
     .sort((a, b) => a.num - b.num)
     .slice(indexOfFirstItem, indexOfLastItem);
 
@@ -153,6 +190,20 @@ function Gen9() {
     } else return null;
   };
 
+  const handleTypeChange1 = (event) => {
+    setSelectedType1(event.target.value);
+  };
+
+  const handleTypeChange2 = (event) => {
+    setSelectedType2(event.target.value);
+  };
+
+  const handleResetFilters = () => {
+    setSearchQuery("");
+    setSelectedType1("");
+    setSelectedType2("");
+  };
+
   const styles = {
     button: {
       color: "#fff",
@@ -206,149 +257,326 @@ function Gen9() {
   return (
     <>
       <br />
-
       <div
         style={{
-          borderTop: "2px solid black",
           width: "20%",
           margin: "10px auto",
           marginTop: "75px",
         }}
       ></div>
-      <Pagination
-        count={Math.ceil(gen9.length / itemsPerPage)}
-        page={currentPage}
-        onChange={handlePageChange}
-        shape="rounded"
-        size="large"
-        color="primary"
-        showFirstButton
-        showLastButton
+      <Box
         sx={{
-          marginTop: "20px",
-          marginBottom: "20px",
-          display: "flex",
-          justifyContent: "center",
-        }}
-      />
-      <Card
-        sx={{
-          backgroundColor: "white",
-          borderRadius: "20px",
           width: "95%",
           margin: "auto",
-          boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
         }}
       >
         <CardContent>
           <Grid container spacing={5}>
-            {currentGen9.map((card, index) => (
-              <Grid item xs={6} sm={3} md={2} key={index}>
-                <Card
-                  sx={{
-                    backgroundColor: "white",
-                    borderRadius: "20px",
-                    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
-                  }}
-                >
-                  <CardActionArea onClick={() => handleOpenModal(card)}>
-                    <CardMedia
-                      component="img"
-                      sx={{ width: 100, margin: "auto" }}
-                      image={card.icon}
-                      alt={card.name}
-                    />
-                    <CardContent>
-                      <Typography
-                        sx={{
-                          fontSize: 15,
-                          textAlign: "center",
-                          lineHeight: "1.2",
-                          maxHeight: "1.2em",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap",
-                          display: "block",
-                        }}
-                        color="text.primary"
-                        gutterBottom
-                      >
-                        <b>#{card.num}</b>
-                      </Typography>
-                      <Typography
-                        sx={{
-                          fontSize: 20,
-                          textAlign: "center",
-                          lineHeight: "1.2",
-                          maxHeight: "1.2em",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap",
-                          display: "block",
-                        }}
-                        color="text.primary"
-                        gutterBottom
-                      >
-                        <b>{card.name}</b>
-                      </Typography>
-
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <img
-                          src={getImageSource(card.type1)}
-                          alt="card.type1"
-                          width={"15%"}
+            {gen9
+              .slice()
+              .reverse()
+              .slice(0, 6)
+              .map((card, index) => (
+                <Grid item xs={6} sm={3} md={2} key={index}>
+                  <Card
+                    sx={{
+                      backgroundColor: "white",
+                      borderRadius: "20px",
+                      boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
+                    }}
+                  >
+                    <CardActionArea onClick={() => handleOpenModal(card)}>
+                      {card.new ? (
+                        <div
                           style={{
-                            marginRight: card.type2 !== "" ? "10px" : null,
+                            position: "absolute",
+                            top: "10px",
+                            right: "10px",
+                            backgroundColor: "red",
+                            color: "white",
+                            padding: "4px 8px",
+                            borderRadius: "10px",
+                            fontSize: "12px",
                           }}
-                        />
-                        {card.type2 !== "" ? (
+                        >
+                          New
+                        </div>
+                      ) : null}
+                      <CardMedia
+                        component="img"
+                        sx={{ width: 100, margin: "auto" }}
+                        image={card.icon}
+                        alt={card.name}
+                      />
+                      <CardContent>
+                        <Typography
+                          sx={{
+                            fontSize: 15,
+                            textAlign: "center",
+                            lineHeight: "1.2",
+                            maxHeight: "1.2em",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                            display: "block",
+                          }}
+                          color="text.primary"
+                          gutterBottom
+                        >
+                          <b>#{card.num}</b>
+                        </Typography>
+                        <Typography
+                          sx={{
+                            fontSize: 20,
+                            textAlign: "center",
+                            lineHeight: "1.2",
+                            maxHeight: "1.2em",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                            display: "block",
+                          }}
+                          color="text.primary"
+                          gutterBottom
+                        >
+                          <b>{card.name}</b>
+                        </Typography>
+
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
                           <img
-                            src={getImageSource(card.type2)}
-                            alt={card.type1}
+                            src={getImageSource(card.type1)}
+                            alt="card.type1"
                             width={"15%"}
+                            style={{
+                              marginRight: card.type2 !== "" ? "10px" : null,
+                            }}
                           />
-                        ) : null}
-                      </div>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
-              </Grid>
-            ))}
+                          {card.type2 !== "" ? (
+                            <img
+                              src={getImageSource(card.type2)}
+                              alt={card.type1}
+                              width={"15%"}
+                            />
+                          ) : null}
+                        </div>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </Grid>
+              ))}
           </Grid>
         </CardContent>
-      </Card>
-      <Pagination
-        count={Math.ceil(gen9.length / itemsPerPage)}
-        page={currentPage}
-        onChange={handlePageChange}
-        shape="rounded"
-        size="large"
-        color="primary"
-        showFirstButton
-        showLastButton
-        sx={{
-          marginTop: "20px",
-          marginBottom: "20px",
-          display: "flex",
-          justifyContent: "center",
-        }}
-      />
+      </Box>
       <div
         style={{
-          borderTop: "2px solid black",
+          // borderTop: "2px solid black",
           width: "20%",
           margin: "10px auto",
-          marginBottom: "30px",
+          marginTop: "15px",
         }}
       ></div>
-      <br />
+      <div style={{ textAlign: "center", marginBottom: "20px" }}>
+        <input
+          type="text"
+          placeholder="Search Pokémon"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          style={{
+            padding: "10px",
+            borderRadius: "5px",
+            width: "15%",
+            // maxWidth: "400px",
+            border: "1px solid #ccc",
+            fontSize: "1.2rem",
+            marginRight: "10px",
+          }}
+        />
+        <select
+          value={selectedType1}
+          onChange={handleTypeChange1}
+          style={{
+            padding: "10px",
+            borderRadius: "5px",
+            width: "10%",
+            // maxWidth: "400px",
+            border: "1px solid #ccc",
+            fontSize: "1.2rem",
+            marginTop: "10px",
+            marginRight: "10px",
+          }}
+        >
+          <option value="">Filter Type 1</option>
+          {types.map((type) => (
+            <option key={type} value={type}>
+              {type}
+            </option>
+          ))}
+        </select>
+        <select
+          value={selectedType2}
+          onChange={handleTypeChange2}
+          style={{
+            padding: "10px",
+            borderRadius: "5px",
+            width: "10%",
+            // maxWidth: "400px",
+            border: "1px solid #ccc",
+            fontSize: "1.2rem",
+            marginTop: "10px",
+            marginRight: "10px",
+          }}
+        >
+          <option value="">Filter Type 2</option>
+          {types.map((type) => (
+            <option key={type} value={type}>
+              {type}
+            </option>
+          ))}
+        </select>
+        <Button onClick={handleResetFilters} variant="contained">
+          Reset
+        </Button>
+      </div>
 
+      {filteredGen9.length > 30 && (
+        <Pagination
+          count={Math.ceil(filteredGen9.length / itemsPerPage)}
+          page={currentPage}
+          onChange={handlePageChange}
+          shape="rounded"
+          size="large"
+          color="primary"
+          showFirstButton
+          showLastButton
+          sx={{
+            marginTop: "20px",
+            marginBottom: "20px",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        />
+      )}
+      <Box
+        sx={{
+          width: "95%",
+          margin: "auto",
+        }}
+      >
+        <CardContent>
+          {filteredGen9.length === 0 ? (
+            <Typography variant="h5" sx={{ textAlign: "center" }}>
+              No Pokemon Found.
+            </Typography>
+          ) : (
+            <Grid container spacing={5}>
+              {currentGen9.map((card, index) => (
+                <Grid item xs={6} sm={3} md={2} key={index}>
+                  <Card
+                    sx={{
+                      backgroundColor: "white",
+                      borderRadius: "20px",
+                      boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
+                    }}
+                  >
+                    <CardActionArea onClick={() => handleOpenModal(card)}>
+                      <CardMedia
+                        component="img"
+                        sx={{ width: 100, margin: "auto" }}
+                        image={card.icon}
+                        alt={card.name}
+                      />
+                      <CardContent>
+                        <Typography
+                          sx={{
+                            fontSize: 15,
+                            textAlign: "center",
+                            lineHeight: "1.2",
+                            maxHeight: "1.2em",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                            display: "block",
+                          }}
+                          color="text.primary"
+                          gutterBottom
+                        >
+                          <b>#{card.num}</b>
+                        </Typography>
+                        <Typography
+                          sx={{
+                            fontSize: 20,
+                            textAlign: "center",
+                            lineHeight: "1.2",
+                            maxHeight: "1.2em",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                            display: "block",
+                          }}
+                          color="text.primary"
+                          gutterBottom
+                        >
+                          <b>{card.name}</b>
+                        </Typography>
+
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <img
+                            src={getImageSource(card.type1)}
+                            alt="card.type1"
+                            width={"15%"}
+                            style={{
+                              marginRight: card.type2 !== "" ? "10px" : null,
+                            }}
+                          />
+                          {card.type2 !== "" ? (
+                            <img
+                              src={getImageSource(card.type2)}
+                              alt={card.type1}
+                              width={"15%"}
+                            />
+                          ) : null}
+                        </div>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          )}
+        </CardContent>
+      </Box>
+      {filteredGen9.length > 30 && (
+        <Pagination
+          count={Math.ceil(filteredGen9.length / itemsPerPage)}
+          page={currentPage}
+          onChange={handlePageChange}
+          shape="rounded"
+          size="large"
+          color="primary"
+          showFirstButton
+          showLastButton
+          sx={{
+            marginTop: "20px",
+            marginBottom: "20px",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        />
+      )}
+
+      <br />
       <Modal
         open={showModal}
         onClose={handleCloseModal}
@@ -1185,7 +1413,6 @@ function Gen9() {
           ) : null}
         </Box>
       </Modal>
-
       <Modal
         open={showNestedModal}
         onClose={handleCloseNestedModal}
