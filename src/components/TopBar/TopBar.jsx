@@ -95,22 +95,6 @@ function TopBar() {
                       textDecoration: "none",
                     }}
                   >
-                    Debut
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                  onClick={handleCloseNavMenu}
-                  component={Link}
-                  to="/gen9"
-                >
-                  <Typography
-                    textAlign="center"
-                    sx={{
-                      fontWeight: 700,
-                      color: "inherit",
-                      textDecoration: "none",
-                    }}
-                  >
                     Paldean-Dex
                   </Typography>
                 </MenuItem>
@@ -139,22 +123,6 @@ function TopBar() {
                 noWrap
                 component={Link}
                 to="/"
-                sx={{
-                  mr: 4,
-                  ml: 4,
-                  display: { xs: "none", md: "flex" },
-                  fontWeight: 700,
-                  color: "inherit",
-                  textDecoration: "none",
-                }}
-              >
-                Debut
-              </Typography>
-              <Typography
-                variant="h6"
-                noWrap
-                component={Link}
-                to="/gen9"
                 sx={{
                   mr: 4,
                   ml: 4,

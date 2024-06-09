@@ -11,9 +11,14 @@ import {
   MenuItem,
   InputLabel,
   InputAdornment,
+  Autocomplete,
 } from "@mui/material";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { signInAnonymously, onAuthStateChanged } from "firebase/auth";
+import { auth, storage } from "../lib/firebase";
 import { add_pokemon, allAbility, allType } from "../services/pokeAPI";
 import Loading from "../components/Loading/Loading";
+import { useNavigate } from "react-router-dom";
 
 const finalTheme = createTheme({
   components: {
@@ -33,8 +38,11 @@ function Signup() {
   const [loading, setLoading] = useState(false);
   const [type, setType] = useState([]);
   const [ability, setAbility] = useState([]);
-  const [avatarBase64, setAvatarBase64] = useState("");
-  const [avatarBase64new, setAvatarBase64new] = useState("");
+  const [avatarFile, setAvatarFile] = useState(null);
+  const [iconFile, setIconFile] = useState(null);
+  const [user, setUser] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,26 +70,43 @@ function Signup() {
     fetchData();
   }, []);
 
-  const [type1, setType1] = React.useState("");
-  const [type2, setType2] = React.useState("");
-  const [abi1, setAbi1] = React.useState("");
-  const [abi2, setAbi2] = React.useState("");
-  const [abi3, setAbi3] = React.useState("");
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        signInAnonymously(auth).catch((error) => {
+          console.error("Authentication error:", error);
+        });
+      }
+    });
+    return () => unsubscribe();
+  }, []);
 
-  const handleChangeType1 = (event) => {
-    setType1(event.target.value);
+  const [type1, setType1] = useState(null);
+  const [type2, setType2] = useState(null);
+  const [abi1, setAbi1] = useState(null);
+  const [abi2, setAbi2] = useState(null);
+  const [abi3, setAbi3] = useState(null);
+
+  const handleChangeType1 = (event, value) => {
+    setType1(value);
   };
-  const handleChangeType2 = (event) => {
-    setType2(event.target.value);
+
+  const handleChangeType2 = (event, value) => {
+    setType2(value);
   };
-  const handleChangeAbi1 = (event) => {
-    setAbi1(event.target.value);
+
+  const handleChangeAbi1 = (event, value) => {
+    setAbi1(value);
   };
-  const handleChangeAbi3 = (event) => {
-    setAbi3(event.target.value);
+
+  const handleChangeAbi3 = (event, value) => {
+    setAbi3(value);
   };
-  const handleChangeAbi2 = (event) => {
-    setAbi2(event.target.value);
+
+  const handleChangeAbi2 = (event, value) => {
+    setAbi2(value);
   };
 
   const [formData, setFormData] = useState({
@@ -109,25 +134,44 @@ function Signup() {
     });
   };
 
+  const uploadImage = async (file, path) => {
+    const storageRef = ref(storage, path);
+    await uploadBytes(storageRef, file);
+    return await getDownloadURL(storageRef);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
-    formData.type1 = type1;
-    formData.type2 = type2;
-    formData.ability = abi1;
-    formData.hid_ability = abi2;
-    formData.ability2 = abi3;
-    formData.category = "Pokémon " + formData.category;
-    formData.image = avatarBase64;
-    formData.icon = avatarBase64new;
-
     try {
-      const response = await add_pokemon(formData);
+      let imageUrl = "";
+      let iconUrl = "";
+
+      if (avatarFile) {
+        imageUrl = await uploadImage(avatarFile, `avatars/${avatarFile.name}`);
+      }
+
+      if (iconFile) {
+        iconUrl = await uploadImage(iconFile, `icons/${iconFile.name}`);
+      }
+
+      const pokemonData = {
+        ...formData,
+        type1,
+        type2,
+        ability: abi1,
+        hid_ability: abi2,
+        ability2: abi3,
+        category: "Pokémon " + formData.category,
+        image: imageUrl,
+        icon: iconUrl,
+      };
+
+      const response = await add_pokemon(pokemonData);
       if (response) {
         console.log("Add successfully");
         setLoading(false);
-        window.location.reload();
+        navigate("/");
       }
     } catch (error) {
       if (error.response) {
@@ -162,7 +206,7 @@ function Signup() {
           <Grid item xs={12}>
             <Box
               sx={{
-                maxWidth: "500px",
+                maxWidth: "700px",
                 margin: "auto",
                 border: "1px solid black",
                 borderRadius: "10px",
@@ -208,6 +252,7 @@ function Signup() {
                           }}
                           variant="outlined"
                           label="Number"
+                          type="number"
                           name="num"
                           value={formData.num}
                           onChange={handleChange}
@@ -248,111 +293,98 @@ function Signup() {
                     </Grid>
                     <Grid container spacing={2}>
                       <Grid item xs={6}>
-                        <FormControl
-                          variant="standard"
+                        <Autocomplete
                           sx={{
-                            width: "100%",
                             marginBottom: "15px",
                           }}
-                        >
-                          <InputLabel>Type 1</InputLabel>
-                          <Select onChange={handleChangeType1}>
-                            {type
-                              .sort((a, b) => a.type.localeCompare(b.type))
-                              .map((card, index) => (
-                                <MenuItem value={card.type} key={index}>
-                                  {card.type}
-                                </MenuItem>
-                              ))}
-                          </Select>
-                        </FormControl>
+                          options={type.map((option) => option.type)}
+                          value={type1}
+                          onChange={handleChangeType1}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              label="Type 1"
+                              variant="standard"
+                            />
+                          )}
+                        />
                       </Grid>
                       <Grid item xs={6}>
-                        <FormControl
-                          variant="standard"
+                        <Autocomplete
                           sx={{
-                            width: "100%",
                             marginBottom: "15px",
                           }}
-                        >
-                          <InputLabel>Type 2</InputLabel>
-                          <Select onChange={handleChangeType2}>
-                            {type
-                              .sort((a, b) => a.type.localeCompare(b.type))
-                              .map((card, index) => (
-                                <MenuItem value={card.type} key={index}>
-                                  {card.type}
-                                </MenuItem>
-                              ))}
-                          </Select>
-                        </FormControl>
+                          options={type.map((option) => option.type)}
+                          value={type2}
+                          onChange={handleChangeType2}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              label="Type 2"
+                              variant="standard"
+                            />
+                          )}
+                        />
                       </Grid>
                     </Grid>
                     <Grid container spacing={2}>
                       <Grid item xs={6}>
-                        <FormControl
-                          variant="standard"
+                        <Autocomplete
                           sx={{
-                            width: "100%",
                             marginBottom: "15px",
                           }}
-                        >
-                          <InputLabel>Ability 1</InputLabel>
-                          <Select onChange={handleChangeAbi1}>
-                            {ability
-                              .sort((a, b) =>
-                                a.ability.localeCompare(b.ability)
-                              )
-                              .map((card, index) => (
-                                <MenuItem value={card.ability} key={index}>
-                                  {card.ability}
-                                </MenuItem>
-                              ))}
-                          </Select>
-                        </FormControl>
+                          options={ability
+                            .sort((a, b) => a.ability.localeCompare(b.ability))
+                            .map((option) => option.ability)}
+                          value={abi1}
+                          onChange={handleChangeAbi1}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              label="Ability 1"
+                              variant="standard"
+                            />
+                          )}
+                        />
                       </Grid>
                       <Grid item xs={6}>
-                        <FormControl
-                          variant="standard"
+                        <Autocomplete
                           sx={{
-                            width: "100%",
                             marginBottom: "15px",
                           }}
-                        >
-                          <InputLabel>Ability 2</InputLabel>
-                          <Select onChange={handleChangeAbi3}>
-                            {ability
-                              .sort((a, b) =>
-                                a.ability.localeCompare(b.ability)
-                              )
-                              .map((card, index) => (
-                                <MenuItem value={card.ability} key={index}>
-                                  {card.ability}
-                                </MenuItem>
-                              ))}
-                          </Select>
-                        </FormControl>
+                          options={ability
+                            .sort((a, b) => a.ability.localeCompare(b.ability))
+                            .map((option) => option.ability)}
+                          value={abi3}
+                          onChange={handleChangeAbi3}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              label="Ability 2"
+                              variant="standard"
+                            />
+                          )}
+                        />
                       </Grid>
                     </Grid>
                     <Grid item xs={12}>
-                      <FormControl
-                        variant="standard"
+                      <Autocomplete
                         sx={{
-                          width: "100%",
                           marginBottom: "15px",
                         }}
-                      >
-                        <InputLabel>Hidden Ability</InputLabel>
-                        <Select onChange={handleChangeAbi2}>
-                          {ability
-                            .sort((a, b) => a.ability.localeCompare(b.ability))
-                            .map((card, index) => (
-                              <MenuItem value={card.ability} key={index}>
-                                {card.ability}
-                              </MenuItem>
-                            ))}
-                        </Select>
-                      </FormControl>
+                        options={ability
+                          .sort((a, b) => a.ability.localeCompare(b.ability))
+                          .map((option) => option.ability)}
+                        value={abi2}
+                        onChange={handleChangeAbi2}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            label="Hidden Ability"
+                            variant="standard"
+                          />
+                        )}
+                      />
                     </Grid>
 
                     <Grid item xs={12}>
@@ -372,22 +404,6 @@ function Signup() {
                         onChange={handleChange}
                       />
                     </Grid>
-                    {/* <Grid item xs={12}>
-                      <TextField
-                        id="outlined-basic"
-                        sx={{
-                          width: "100%",
-                          [`& fieldset`]: { borderRadius: 8 },
-
-                          marginBottom: "15px",
-                        }}
-                        variant="outlined"
-                        label="Info Vn"
-                        name="info_vn"
-                        value={formData.info_vn}
-                        onChange={handleChange}
-                      />
-                    </Grid> */}
                     <Grid item xs={12}>
                       <TextField
                         id="outlined-basic"
@@ -466,7 +482,7 @@ function Signup() {
 
                     <Grid container spacing={2}>
                       <Grid item xs={6}>
-                        {avatarBase64 ? (
+                        {avatarFile ? (
                           <Box
                             sx={{
                               width: "100%",
@@ -475,8 +491,8 @@ function Signup() {
                             }}
                           >
                             <img
-                              alt={avatarBase64}
-                              src={avatarBase64}
+                              alt="Avatar"
+                              src={URL.createObjectURL(avatarFile)}
                               style={{
                                 width: "100%",
                                 height: "auto",
@@ -486,7 +502,7 @@ function Signup() {
                         ) : null}
                       </Grid>
                       <Grid item xs={6}>
-                        {avatarBase64new ? (
+                        {iconFile ? (
                           <Box
                             sx={{
                               width: "100%",
@@ -495,8 +511,8 @@ function Signup() {
                             }}
                           >
                             <img
-                              alt={avatarBase64new}
-                              src={avatarBase64new}
+                              alt="Icon"
+                              src={URL.createObjectURL(iconFile)}
                               style={{
                                 width: "100%",
                                 height: "auto",
@@ -541,19 +557,7 @@ function Signup() {
                               }}
                               type="file"
                               accept="image/*"
-                              onChange={(e) => {
-                                const selectedFile = e.target.files[0];
-                                const reader = new FileReader();
-                                reader.onloadend = () => {
-                                  const base64data = reader.result;
-                                  setAvatarBase64(base64data);
-                                  // setFormData({
-                                  //   ...formData,
-                                  //   avatar: avatarBase64,
-                                  // });
-                                };
-                                reader.readAsDataURL(selectedFile);
-                              }}
+                              onChange={(e) => setAvatarFile(e.target.files[0])}
                             />
                             Add Image
                           </label>
@@ -593,19 +597,7 @@ function Signup() {
                               }}
                               type="file"
                               accept="image/*"
-                              onChange={(e) => {
-                                const selectedFile = e.target.files[0];
-                                const reader = new FileReader();
-                                reader.onloadend = () => {
-                                  const base64data = reader.result;
-                                  setAvatarBase64new(base64data);
-                                  // setFormData({
-                                  //   ...formData,
-                                  //   avatar: avatarBase64,
-                                  // });
-                                };
-                                reader.readAsDataURL(selectedFile);
-                              }}
+                              onChange={(e) => setIconFile(e.target.files[0])}
                             />
                             Add Icon
                           </label>
