@@ -6,10 +6,6 @@ import {
   Button,
   Typography,
   Box,
-  Select,
-  FormControl,
-  MenuItem,
-  InputLabel,
   InputAdornment,
   Autocomplete,
 } from "@mui/material";
@@ -120,6 +116,7 @@ function Signup() {
     form1: "",
     form2: "",
     form3: "",
+    form4: "",
     name: "",
     jpname: "",
     info_en: "",
@@ -463,21 +460,39 @@ function Signup() {
                       </Grid>
                     </Grid>
 
-                    <Grid item xs={12}>
-                      <TextField
-                        id="outlined-basic"
-                        sx={{
-                          width: "100%",
-                          [`& fieldset`]: { borderRadius: 8 },
+                    <Grid container spacing={2}>
+                      <Grid item xs={6}>
+                        <TextField
+                          id="outlined-basic"
+                          sx={{
+                            width: "100%",
+                            [`& fieldset`]: { borderRadius: 8 },
 
-                          marginBottom: "15px",
-                        }}
-                        variant="outlined"
-                        label="Form 3"
-                        name="form3"
-                        value={formData.form3}
-                        onChange={handleChange}
-                      />
+                            marginBottom: "15px",
+                          }}
+                          variant="outlined"
+                          label="Form 3"
+                          name="form3"
+                          value={formData.form3}
+                          onChange={handleChange}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <TextField
+                          id="outlined-basic"
+                          sx={{
+                            width: "100%",
+                            [`& fieldset`]: { borderRadius: 8 },
+
+                            marginBottom: "15px",
+                          }}
+                          variant="outlined"
+                          label="Form 4"
+                          name="form4"
+                          value={formData.form4}
+                          onChange={handleChange}
+                        />
+                      </Grid>
                     </Grid>
 
                     <Grid container spacing={2}>

@@ -190,6 +190,22 @@ function TopBar() {
                     Add Pokémon
                   </Typography>
                 </MenuItem>
+                <MenuItem
+                  onClick={handleCloseUserMenu}
+                  component={Link}
+                  to="/add_abi"
+                >
+                  <Typography
+                    sx={{
+                      fontWeight: 700,
+                      color: "inherit",
+                      textDecoration: "none",
+                      width: "100%",
+                    }}
+                  >
+                    Add Ability
+                  </Typography>
+                </MenuItem>
               </Menu>
             </Box>
           </Toolbar>

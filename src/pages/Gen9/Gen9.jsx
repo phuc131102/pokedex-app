@@ -20,12 +20,12 @@ import {
 } from "@mui/material";
 import useGen9 from "../../utils/gen9Utils";
 import { allAbility } from "../../services/pokeAPI";
-import Loading from "../../components/Loading/Loading";
 import getImageSource from "../../components/Type/Type";
 import getImageSourceFull from "../../components/Type/Type_full";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useLocation, useNavigate } from "react-router-dom";
+import RotatingImage from "../../components/RotatingImage/RotatingImage";
 
 function Gen9() {
   const [showModal, setShowModal] = useState(false);
@@ -37,6 +37,7 @@ function Gen9() {
   const [selectedType2, setSelectedType2] = useState("");
   const [form, setForm] = useState("");
   const [form2, setForm2] = useState("");
+  const [form3, setForm3] = useState("");
   const [lv1, setLv1] = useState("");
   const [lv2, setLv2] = useState("");
   const [lv2Form2, setLv2Form2] = useState("");
@@ -127,6 +128,9 @@ function Gen9() {
     if (cardInfo.form3 !== "") {
       findForm2(cardInfo.name, cardInfo.form3);
     }
+    if (cardInfo.form4 !== "") {
+      findForm3(cardInfo.name, cardInfo.form4);
+    }
     if (cardInfo.lv1) {
       findLv1(cardInfo.lv1);
     }
@@ -173,6 +177,15 @@ function Gen9() {
     );
     if (abilityCard) {
       setForm2(abilityCard);
+    } else return null;
+  };
+
+  const findForm3 = (name, form4) => {
+    const abilityCard = gen9.find(
+      (gen9) => gen9.name === name && gen9.form1 === form4
+    );
+    if (abilityCard) {
+      setForm3(abilityCard);
     } else return null;
   };
 
@@ -251,13 +264,13 @@ function Gen9() {
       top: "50%",
       left: "50%",
       transform: "translate(-50%, -50%)",
-      width: "90%", // Adjust the width as needed for smaller screens
-      maxWidth: "500px", // Set a maximum width
-      maxHeight: "75vh", // Set a maximum height relative to the viewport height
-      backgroundColor: "white", // Use the appropriate background color
-      boxShadow: "0 0 24px rgba(0, 0, 0, 0.5)", // Adjust the box shadow as needed
-      borderRadius: "10px", // Use appropriate border radius
-      padding: "20px", // Adjust padding as needed
+      width: "90%",
+      maxWidth: "500px",
+      maxHeight: "75vh",
+      backgroundColor: "white",
+      boxShadow: "0 0 24px rgba(0, 0, 0, 0.5)",
+      borderRadius: "10px",
+      padding: "20px",
       overflow: "auto",
     },
     nestedmodal: {
@@ -265,13 +278,13 @@ function Gen9() {
       top: "50%",
       left: "50%",
       transform: "translate(-50%, -50%)",
-      width: "90%", // Adjust the width as needed for smaller screens
-      maxWidth: "400px", // Set a maximum width
-      maxHeight: "75vh", // Set a maximum height relative to the viewport height
-      backgroundColor: "white", // Use the appropriate background color
-      boxShadow: "0 0 24px rgba(0, 0, 0, 0.5)", // Adjust the box shadow as needed
-      borderRadius: "10px", // Use appropriate border radius
-      padding: "20px", // Adjust padding as needed
+      width: "90%",
+      maxWidth: "400px",
+      maxHeight: "75vh",
+      backgroundColor: "white",
+      boxShadow: "0 0 24px rgba(0, 0, 0, 0.5)",
+      borderRadius: "10px",
+      padding: "20px",
       overflow: "auto",
     },
     scrollbar: {
@@ -282,7 +295,12 @@ function Gen9() {
   };
 
   if (loadingGen9) {
-    return <Loading />;
+    return (
+      <RotatingImage
+        src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/1026px-Pok%C3%A9_Ball_icon.svg.png"
+        alt="Loading"
+      />
+    );
   }
 
   return (
@@ -1178,7 +1196,89 @@ function Gen9() {
               </CardActionArea>
             </Card>
           ) : null}
-          {selectedCard.form2 !== "" || selectedCard.form3 !== "" ? (
+          {selectedCard.form4 !== "" ? (
+            <Card
+              sx={{
+                backgroundColor: "white",
+                borderRadius: "20px",
+                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
+                width: "50%",
+                margin: "auto",
+                marginTop: "30px",
+              }}
+            >
+              <CardActionArea onClick={() => handleOpenModal(form3)}>
+                <CardMedia
+                  component="img"
+                  sx={{ width: 100, margin: "auto" }}
+                  image={form3.icon}
+                  alt={form3.name}
+                />
+                <CardContent>
+                  <Typography
+                    sx={{
+                      fontSize: 20,
+                      textAlign: "center",
+                      lineHeight: "1.2",
+                      maxHeight: "1.2em",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      display: "block",
+                    }}
+                    color="text.primary"
+                    gutterBottom
+                  >
+                    <b>{form3.name}</b>
+                  </Typography>
+
+                  <Typography
+                    sx={{
+                      fontSize: 15,
+                      textAlign: "center",
+                      lineHeight: "1.2",
+                      maxHeight: "1.2em",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      display: "block",
+                    }}
+                    color="text.primary"
+                    gutterBottom
+                  >
+                    <b>{form3.form1}</b>
+                  </Typography>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <img
+                      src={getImageSource(form3.type1)}
+                      alt="Grass"
+                      width={"15%"}
+                      style={{
+                        marginRight: form3.type2 !== "" ? "10px" : null,
+                      }}
+                    />
+                    {form3.type2 !== "" ? (
+                      <img
+                        src={getImageSource(form3.type2)}
+                        alt="Grass"
+                        width={"15%"}
+                      />
+                    ) : null}
+                  </div>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          ) : null}
+          {selectedCard.form2 !== "" ||
+          selectedCard.form3 !== "" ||
+          selectedCard.form4 !== "" ? (
             <div
               style={{
                 borderTop: "2px solid black",
