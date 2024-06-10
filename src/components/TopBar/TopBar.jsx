@@ -36,7 +36,7 @@ function TopBar() {
     <div>
       <AppBar
         position="fixed"
-        style={{ top: 0, background: "#2E3B55", zIndex: 999 }}
+        style={{ top: 0, background: "orange", zIndex: 999 }}
       >
         <Container maxWidth="100%">
           <Toolbar disableGutters>
@@ -134,7 +134,7 @@ function TopBar() {
                   ml: 4,
                   display: { xs: "none", md: "flex" },
                   fontWeight: 700,
-                  color: "inherit",
+                  color: "black",
                   textDecoration: "none",
                 }}
               >
@@ -151,7 +151,7 @@ function TopBar() {
                   color: "inherit",
                 }}
               >
-                v2.2.2
+                v2.2.3
               </Typography>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
