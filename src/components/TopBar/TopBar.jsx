@@ -36,7 +36,7 @@ function TopBar() {
     <div>
       <AppBar
         position="fixed"
-        style={{ top: 0, background: "orange", zIndex: 999 }}
+        style={{ top: 0, background: "#2E3B55", zIndex: 999 }}
       >
         <Container maxWidth="100%">
           <Toolbar disableGutters>
@@ -113,7 +113,6 @@ function TopBar() {
                 display: { md: "none" },
                 flexGrow: 1,
                 fontWeight: 700,
-                // letterSpacing: ".3rem",
                 textDecoration: "none",
                 color: "yellow",
                 backgroundColor: "green",
@@ -134,7 +133,7 @@ function TopBar() {
                   ml: 4,
                   display: { xs: "none", md: "flex" },
                   fontWeight: 700,
-                  color: "black",
+                  color: "inherit",
                   textDecoration: "none",
                 }}
               >
