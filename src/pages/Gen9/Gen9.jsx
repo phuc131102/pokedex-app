@@ -786,7 +786,11 @@ function Gen9() {
           <Typography id="place-book-modal" variant="h6" textAlign="center">
             <b>#{selectedCard.num}</b>
           </Typography>
-          <Typography id="place-book-modal" variant="h4" textAlign="center">
+          <Typography
+            id="place-book-modal"
+            variant={isMd ? "h4" : "h5"}
+            textAlign="center"
+          >
             {selectedCard.jpname ? (
               <>
                 <sup style={{ fontSize: "10px" }}>Eng </sup>
@@ -1401,7 +1405,7 @@ function Gen9() {
                                 <img
                                   src={getImageSource(lv1.type1)}
                                   alt="Grass"
-                                  width={"15%"}
+                                  width={isMd ? "15%" : "25%"}
                                   style={{
                                     marginRight:
                                       lv1.type2 !== "" ? "10px" : null,
@@ -1411,7 +1415,7 @@ function Gen9() {
                                   <img
                                     src={getImageSource(lv1.type2)}
                                     alt="Grass"
-                                    width={"15%"}
+                                    width={isMd ? "15%" : "25%"}
                                   />
                                 ) : null}
                               </div>
@@ -1486,7 +1490,7 @@ function Gen9() {
                                 <img
                                   src={getImageSource(lv2.type1)}
                                   alt="Grass"
-                                  width={"15%"}
+                                  width={isMd ? "15%" : "25%"}
                                   style={{
                                     marginRight:
                                       lv2.type2 !== "" ? "10px" : null,
@@ -1496,7 +1500,7 @@ function Gen9() {
                                   <img
                                     src={getImageSource(lv2.type2)}
                                     alt="Grass"
-                                    width={"15%"}
+                                    width={isMd ? "15%" : "25%"}
                                   />
                                 ) : null}
                               </div>
@@ -1567,7 +1571,7 @@ function Gen9() {
                                   <img
                                     src={getImageSource(lv2Form2.type1)}
                                     alt="Grass"
-                                    width={"15%"}
+                                    width={isMd ? "15%" : "25%"}
                                     style={{
                                       marginRight:
                                         lv2Form2.type2 !== "" ? "10px" : null,
@@ -1577,7 +1581,7 @@ function Gen9() {
                                     <img
                                       src={getImageSource(lv2Form2.type2)}
                                       alt="Grass"
-                                      width={"15%"}
+                                      width={isMd ? "15%" : "25%"}
                                     />
                                   ) : null}
                                 </div>
@@ -1655,7 +1659,7 @@ function Gen9() {
                                   <img
                                     src={getImageSource(lv3.type1)}
                                     alt="Grass"
-                                    width={"15%"}
+                                    width={isMd ? "15%" : "25%"}
                                     style={{
                                       marginRight:
                                         lv3.type2 !== "" ? "10px" : null,
@@ -1665,7 +1669,7 @@ function Gen9() {
                                     <img
                                       src={getImageSource(lv3.type2)}
                                       alt="Grass"
-                                      width={"15%"}
+                                      width={isMd ? "15%" : "25%"}
                                     />
                                   ) : null}
                                 </div>
