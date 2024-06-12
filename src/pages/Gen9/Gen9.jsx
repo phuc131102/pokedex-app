@@ -100,9 +100,11 @@ function Gen9() {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
   const filteredGen9 = gen9.filter((pokemon) => {
-    const matchesSearchQuery = pokemon.name
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase());
+    const matchesSearchQuery =
+      (pokemon.name &&
+        pokemon.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (pokemon.jpname &&
+        pokemon.jpname.toLowerCase().includes(searchQuery.toLowerCase()));
     const matchesType1 =
       selectedType1 === "" || pokemon.type1 === selectedType1;
     const matchesType2 =
