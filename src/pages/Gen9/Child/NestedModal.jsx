@@ -1,5 +1,6 @@
 import { Modal, Box, Typography } from "@mui/material";
 import React from "react";
+import Line from "./ModalComponent/Line";
 
 function NestedModal(prop) {
   return (
@@ -16,14 +17,7 @@ function NestedModal(prop) {
         <Typography variant="body1" textAlign="justify" marginTop={2}>
           {prop.abilityInfo.info}
         </Typography>
-        <div
-          style={{
-            borderTop: "2px solid black",
-            width: "90%",
-            margin: "10px auto",
-            marginTop: "30px",
-          }}
-        ></div>
+        <Line mb="0" />
       </Box>
     </Modal>
   );
