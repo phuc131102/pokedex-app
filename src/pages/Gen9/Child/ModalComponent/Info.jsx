@@ -7,17 +7,13 @@ function Info(prop) {
       <Typography id="place-book-modal" variant="h6" textAlign="center">
         <b>#{prop.selectedCard.num}</b>
       </Typography>
-      <Typography
-        id="place-book-modal"
-        variant={prop.isMd ? "h4" : "h5"}
-        textAlign="center"
-      >
+      <Typography id="place-book-modal" variant="h4" textAlign="center">
         {prop.selectedCard.jpname ? (
-          <>
-            <sup style={{ fontSize: "10px" }}>Eng </sup>
-            <b>{prop.selectedCard.name}</b> - <b>{prop.selectedCard.jpname}</b>
-            <sup style={{ fontSize: "10px" }}> Jpn</sup>
-          </>
+          <b>
+            {prop.showJapaneseName
+              ? prop.selectedCard.jpname
+              : prop.selectedCard.name}
+          </b>
         ) : (
           <b>{prop.selectedCard.name}</b>
         )}

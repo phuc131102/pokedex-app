@@ -21,8 +21,8 @@ function MainModal(prop) {
       >
         <Info
           selectedCard={prop.selectedCard}
-          isMd={prop.isMd}
           getImageSourceFull={prop.getImageSourceFull}
+          showJapaneseName={prop.showJapaneseName}
         />
 
         <TableInfo

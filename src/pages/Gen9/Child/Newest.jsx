@@ -89,9 +89,15 @@ function Newest(prop) {
                             color="text.primary"
                             gutterBottom
                           >
-                            <b>
-                              {prop.showJapaneseName ? card.jpname : card.name}
-                            </b>
+                            {card.jpname ? (
+                              <b>
+                                {prop.showJapaneseName
+                                  ? card.jpname
+                                  : card.name}
+                              </b>
+                            ) : (
+                              <b>{card.name}</b>
+                            )}
                           </Typography>
 
                           <div
@@ -191,9 +197,15 @@ function Newest(prop) {
                             color="text.primary"
                             gutterBottom
                           >
-                            <b>
-                              {prop.showJapaneseName ? card.jpname : card.name}
-                            </b>
+                            {card.jpname ? (
+                              <b>
+                                {prop.showJapaneseName
+                                  ? card.jpname
+                                  : card.name}
+                              </b>
+                            ) : (
+                              <b>{card.name}</b>
+                            )}
                           </Typography>
 
                           <div

@@ -359,6 +359,7 @@ function Gen9(prop) {
         lv2={lv2}
         lv2Form2={lv2Form2}
         lv3={lv3}
+        showJapaneseName={prop.showJapaneseName}
       />
 
       <NestedModal
