@@ -71,7 +71,7 @@ function List(prop) {
                         color="text.primary"
                         gutterBottom
                       >
-                        <b>{card.name}</b>
+                        <b>{prop.showJapaneseName ? card.jpname : card.name}</b>
                       </Typography>
 
                       <div

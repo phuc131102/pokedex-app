@@ -241,6 +241,7 @@ function Evoluation(prop) {
                         </CardContent>
                       </CardActionArea>
                     </Card>
+
                     {prop.lv2.form2 !== "" ? (
                       <Card
                         sx={{
@@ -383,7 +384,6 @@ function Evoluation(prop) {
                             >
                               <b>#{prop.lv3.num}</b>
                             </Typography>
-
                             <div
                               style={{
                                 display: "flex",

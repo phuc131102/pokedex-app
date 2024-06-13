@@ -3,8 +3,6 @@ import useGen9 from "../../utils/gen9Utils";
 import { allAbility } from "../../services/pokeAPI";
 import getImageSource from "../../components/Type/Type";
 import getImageSourceFull from "../../components/Type/Type_full";
-import { useTheme } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import { useLocation, useNavigate } from "react-router-dom";
 import RotatingImage from "../../components/RotatingImage/RotatingImage";
 import Newest from "./Child/Newest";
@@ -15,7 +13,7 @@ import List from "./Child/List";
 import NestedModal from "./Child/NestedModal";
 import MainModal from "./Child/MainModal";
 
-function Gen9() {
+function Gen9(prop) {
   const [showModal, setShowModal] = useState(false);
   const [showNestedModal, setShowNestedModal] = useState(false);
   const [selectedCard, setSelectedCard] = useState("");
@@ -33,9 +31,7 @@ function Gen9() {
   const [ability, setAbility] = useState([]);
   const { gen9, loadingGen9 } = useGen9();
   const modalContentRef = useRef(null);
-  const theme = useTheme();
-  const isMd = useMediaQuery(theme.breakpoints.up("md"));
-  const itemsPerPage = isMd ? 30 : 10;
+  const itemsPerPage = prop.isMd ? 30 : 10;
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -298,9 +294,10 @@ function Gen9() {
 
       <Newest
         gen9={gen9}
-        isMd={isMd}
+        isMd={prop.isMd}
         handleOpenModal={handleOpenModal}
         getImageSource={getImageSource}
+        showJapaneseName={prop.showJapaneseName}
       />
 
       <Spacing mt="15px" />
@@ -308,7 +305,7 @@ function Gen9() {
       <Search
         searchQuery={searchQuery}
         handleSearchChange={handleSearchChange}
-        isMd={isMd}
+        isMd={prop.isMd}
         selectedType1={selectedType1}
         handleTypeChange1={handleTypeChange1}
         types={types}
@@ -322,7 +319,7 @@ function Gen9() {
         itemsPerPage={itemsPerPage}
         currentPage={currentPage}
         handlePageChange={handlePageChange}
-        isMd={isMd}
+        isMd={prop.isMd}
       />
 
       <List
@@ -330,7 +327,8 @@ function Gen9() {
         currentGen9={currentGen9}
         handleOpenModal={handleOpenModal}
         getImageSource={getImageSource}
-        isMd={isMd}
+        isMd={prop.isMd}
+        showJapaneseName={prop.showJapaneseName}
       />
 
       <Paginate
@@ -338,7 +336,7 @@ function Gen9() {
         itemsPerPage={itemsPerPage}
         currentPage={currentPage}
         handlePageChange={handlePageChange}
-        isMd={isMd}
+        isMd={prop.isMd}
       />
 
       <br />
@@ -350,7 +348,7 @@ function Gen9() {
         styles={styles}
         modalContentRef={modalContentRef}
         selectedCard={selectedCard}
-        isMd={isMd}
+        isMd={prop.isMd}
         getImageSourceFull={getImageSourceFull}
         handleOpenNestedModal={handleOpenNestedModal}
         form={form}

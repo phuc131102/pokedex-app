@@ -11,8 +11,9 @@ import MenuItem from "@mui/material/MenuItem";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import { Link } from "react-router-dom";
+import NameSwitch from "../NameSwitch/NameSwitch";
 
-function TopBar() {
+function TopBar(prop) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -120,7 +121,7 @@ function TopBar() {
                 borderRadius: "10px",
               }}
             >
-              Horizon-Dex
+              H-Dex
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               <Typography
@@ -141,6 +142,7 @@ function TopBar() {
               </Typography>
             </Box>
             <Box sx={{ flexGrow: 0, display: "flex" }}>
+              <NameSwitch onChange={prop.onNameSwitchChange} isMd={prop.isMd} />
               <Typography
                 noWrap
                 sx={{
@@ -150,7 +152,7 @@ function TopBar() {
                   color: "inherit",
                 }}
               >
-                v2.2.3
+                v2.3.0
               </Typography>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
