@@ -58,7 +58,9 @@ function Form(prop) {
                 color="text.primary"
                 gutterBottom
               >
-                <b>{prop.form.name}</b>
+                <b>
+                  {prop.showJapaneseName ? prop.form.jpname : prop.form.name}
+                </b>
               </Typography>
 
               <Typography
@@ -139,7 +141,9 @@ function Form(prop) {
                 color="text.primary"
                 gutterBottom
               >
-                <b>{prop.form2.name}</b>
+                <b>
+                  {prop.showJapaneseName ? prop.form2.jpname : prop.form2.name}
+                </b>
               </Typography>
 
               <Typography
@@ -220,7 +224,9 @@ function Form(prop) {
                 color="text.primary"
                 gutterBottom
               >
-                <b>{prop.form3.name}</b>
+                <b>
+                  {prop.showJapaneseName ? prop.form3.jpname : prop.form3.name}
+                </b>
               </Typography>
 
               <Typography

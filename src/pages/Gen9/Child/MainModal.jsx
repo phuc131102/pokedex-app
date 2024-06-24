@@ -43,6 +43,7 @@ function MainModal(prop) {
           getImageSource={prop.getImageSource}
           form2={prop.form2}
           form3={prop.form3}
+          showJapaneseName={prop.showJapaneseName}
         />
 
         <Evoluation
@@ -54,6 +55,7 @@ function MainModal(prop) {
           lv2Form2={prop.lv2Form2}
           lv3={prop.lv3}
           isMd={prop.isMd}
+          showJapaneseName={prop.showJapaneseName}
         />
       </Box>
     </Modal>

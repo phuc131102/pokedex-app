@@ -108,7 +108,11 @@ function Evoluation(prop) {
                             color="text.primary"
                             gutterBottom
                           >
-                            <b>{prop.lv1.name}</b>
+                            <b>
+                              {prop.showJapaneseName
+                                ? prop.lv1.jpname
+                                : prop.lv1.name}
+                            </b>
                           </Typography>
                           <Typography
                             sx={{
@@ -195,7 +199,11 @@ function Evoluation(prop) {
                             color="text.primary"
                             gutterBottom
                           >
-                            <b>{prop.lv2.name}</b>
+                            <b>
+                              {prop.showJapaneseName
+                                ? prop.lv2.jpname
+                                : prop.lv2.name}
+                            </b>
                           </Typography>
                           <Typography
                             sx={{
@@ -277,7 +285,11 @@ function Evoluation(prop) {
                               color="text.primary"
                               gutterBottom
                             >
-                              <b>{prop.lv2Form2.name}</b>
+                              <b>
+                                {prop.showJapaneseName
+                                  ? prop.lv2Form2.jpname
+                                  : prop.lv2Form2.name}
+                              </b>
                             </Typography>
                             <Typography
                               sx={{
@@ -366,7 +378,11 @@ function Evoluation(prop) {
                               color="text.primary"
                               gutterBottom
                             >
-                              <b>{prop.lv3.name}</b>
+                              <b>
+                                {prop.showJapaneseName
+                                  ? prop.lv3.jpname
+                                  : prop.lv3.name}
+                              </b>
                             </Typography>
                             <Typography
                               sx={{
