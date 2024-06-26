@@ -19,6 +19,8 @@ function Newest(prop) {
     speed: 500,
     slidesToShow: 2,
     slidesToScroll: 2,
+    autoplay: true,
+    autoplaySpeed: 5000,
   };
 
   const cardsToShow = prop.gen9.slice().reverse().slice(0, 6);
