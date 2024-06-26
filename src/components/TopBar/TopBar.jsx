@@ -152,7 +152,7 @@ function TopBar(prop) {
                   color: "inherit",
                 }}
               >
-                v2.3.0
+                v2.4.0
               </Typography>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
