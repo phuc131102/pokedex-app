@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   Grid,
   Typography,
@@ -10,6 +10,14 @@ import {
 } from "@mui/material";
 
 function List(prop) {
+  const colorToBackgroundColor = {
+    0: "#b3b3ff", //poison
+    1: "#ffc6b3", //fight
+    A: "#b3ffb3", //grass
+    B: "#ffb3b3", //fire
+    C: "#b3ffff", //water
+  };
+
   return (
     <Box
       sx={{
@@ -28,7 +36,8 @@ function List(prop) {
               <Grid item xs={6} sm={3} md={2} key={index}>
                 <Card
                   sx={{
-                    backgroundColor: "white",
+                    backgroundColor:
+                      colorToBackgroundColor[card.color] || "white",
                     borderRadius: "20px",
                     boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
                   }}
